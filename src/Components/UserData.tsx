@@ -1,5 +1,3 @@
-// UserData.tsx
-
 import React, { useState, ChangeEvent } from 'react';
 import '../Style/UserData.css';
 
@@ -12,6 +10,8 @@ const UserData = ({ onSendData }: UserDataProps) => {
   const [xInput, setXInput] = useState('');
   const [yInput, setYInput] = useState('');
   const [instructionsInput, setInstructionsInput] = useState('');
+
+  const [userDataArray, setUserDataArray] = useState<any[]>([]);
 
   const mapDirectionToNumber = (direction: string): number => {
     switch (direction.toUpperCase()) {
@@ -48,6 +48,21 @@ const UserData = ({ onSendData }: UserDataProps) => {
     const numericDirection = mapDirectionToNumber(directionInput);
     console.log(`Sending Data to Rover: Direction: ${numericDirection}, X: ${xInput}, Y: ${yInput}, Instructions: ${instructionsInput}`);
     onSendData(numericDirection, parseFloat(xInput), parseFloat(yInput), instructionsInput);
+
+    // Add current user data to the array
+    setUserDataArray((prevArray) => {
+      const newArray = [
+        ...prevArray,
+        {
+          direction: numericDirection,
+          x: parseFloat(xInput),
+          y: parseFloat(yInput),
+          instructions: instructionsInput,
+        },
+      ];
+      console.log('User Data Array Updated:', newArray);
+      return newArray;
+    });
   };
 
   const handleInstructionsSubmit = () => {
@@ -90,6 +105,21 @@ const UserData = ({ onSendData }: UserDataProps) => {
 
     console.log(`Sending Data to Rover: Direction: ${newDirection}, X: ${newX}, Y: ${newY}, Instructions: ${instructionsInput}`);
     onSendData(newDirection, newX, newY, instructionsInput);
+
+    // Add current user data to the array
+    setUserDataArray((prevArray) => {
+      const newArray = [
+        ...prevArray,
+        {
+          direction: newDirection,
+          x: newX,
+          y: newY,
+          instructions: instructionsInput,
+        },
+      ];
+      console.log('User Data Array Updated:', newArray);
+      return newArray;
+    });
   };
 
   return (
@@ -115,6 +145,18 @@ const UserData = ({ onSendData }: UserDataProps) => {
         <input type="text" value={instructionsInput} onChange={handleInstructionsInput} />
       </label>
       <button onClick={handleInstructionsSubmit}>Start Instructions</button>
+
+      {/* Display User Data Array */}
+      <div className="user-data-array">
+        <h2>User Data Array</h2>
+        <ul>
+          {userDataArray.map((userData, index) => (
+            <li key={index}>
+              Direction: {userData.direction}, X: {userData.x}, Y: {userData.y}, Instructions: {userData.instructions}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
