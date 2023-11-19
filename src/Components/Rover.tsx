@@ -1,7 +1,6 @@
-import React, { ReactElement, useEffect, useReducer } from 'react';
+import React, { ReactElement, useReducer, useEffect } from 'react';
 
 const SET_DIRECTION = 'SET_DIRECTION';
-
 
 const directionReducer = (state: number, action: { type: string; payload: number }) => {
   switch (action.type) {
@@ -13,30 +12,17 @@ const directionReducer = (state: number, action: { type: string; payload: number
 };
 
 interface RoverProps {
-  direction: string;
+  direction: number; 
+  x: number;
+  y: number;
+  instructions: string;
 }
 
-const Rover = ({ direction }: RoverProps): ReactElement => {
+const Rover = ({ direction, x, y, instructions }: RoverProps): ReactElement => {
   const [internalDirection, dispatch] = useReducer(directionReducer, 0);
 
   useEffect(() => {
-    switch (direction) {
-      case 'N':
-        dispatch({ type: SET_DIRECTION, payload: 0 });
-        break;
-      case 'E':
-        dispatch({ type: SET_DIRECTION, payload: 90 });
-        break;
-      case 'S':
-        dispatch({ type: SET_DIRECTION, payload: 180 });
-        break;
-      case 'W':
-        dispatch({ type: SET_DIRECTION, payload: 270 });
-        break;
-      default:
-        console.error('Invalid direction:', direction);
-        break;
-    }
+    dispatch({ type: SET_DIRECTION, payload: direction });
   }, [direction]);
 
   return (
@@ -49,6 +35,15 @@ const Rover = ({ direction }: RoverProps): ReactElement => {
         }}
       >
         &#8593;
+      </div>
+      <div>
+        <p>X coordinate: {x}</p>
+      </div>
+      <div>
+        <p>Y coordinate: {y}</p>
+      </div>
+      <div>
+        <p>Instructions: {instructions}</p>
       </div>
     </div>
   );

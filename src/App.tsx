@@ -1,32 +1,30 @@
+// App.tsx
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import FinalInfoRover from './Components/FinalInfoRover';
-import GridPlateou from './Components/GridPlateou';
-import PlateouInfo from './Components/PlateouInfo';
 import Rover from './Components/Rover';
 import UserData from './Components/UserData';
 
 function App() {
+  const [roverData, setRoverData] = useState({ direction: 0, x: 0, y: 0, instructions: '' });
 
-  const [direction, setDirection] = useState('');
-
-  const handleDirectionClick = (value: string) => {
-    setDirection(value);
+  const handleSendData = (direction: number, x: number, y: number, instructions: string) => {
+    setRoverData({ direction, x, y, instructions });
   };
+
   return (
     <>
-    <div className="App">
-        <p>        App       </p>
-         <GridPlateou/>
-        <PlateouInfo/>
-    <FinalInfoRover/>
-
-    <div>
-      <UserData onDirectionClick={handleDirectionClick} />
-      <Rover direction={direction} />
-    </div>
-    </div>
+      <div className="App">
+        <div className='UserInfoRover'>
+          <UserData onSendData={handleSendData} />
+        </div>
+        <Rover
+          direction={roverData.direction}
+          x={roverData.x}
+          y={roverData.y}
+          instructions={roverData.instructions}
+        />
+      </div>
     </>
   );
 }

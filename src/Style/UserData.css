@@ -1,0 +1,4 @@
+.UserData{
+    display: flex;
+    flex-direction: column;
+}
