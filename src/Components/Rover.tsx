@@ -36,15 +36,7 @@ const Rover = ({ direction, x, y, instructions }: RoverProps): ReactElement => {
       >
         &#8593;
       </div>
-      <div>
-        <p>X coordinate: {x}</p>
-      </div>
-      <div>
-        <p>Y coordinate: {y}</p>
-      </div>
-      <div>
-        <p>Instructions: {instructions}</p>
-      </div>
+   
     </div>
   );
 };

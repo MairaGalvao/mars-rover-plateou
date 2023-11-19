@@ -49,7 +49,6 @@ const UserData = ({ onSendData }: UserDataProps) => {
     console.log(`Sending Data to Rover: Direction: ${numericDirection}, X: ${xInput}, Y: ${yInput}, Instructions: ${instructionsInput}`);
     onSendData(numericDirection, parseFloat(xInput), parseFloat(yInput), instructionsInput);
 
-    // Add current user data to the array
     setUserDataArray((prevArray) => {
       const newArray = [
         ...prevArray,
@@ -106,7 +105,6 @@ const UserData = ({ onSendData }: UserDataProps) => {
     console.log(`Sending Data to Rover: Direction: ${newDirection}, X: ${newX}, Y: ${newY}, Instructions: ${instructionsInput}`);
     onSendData(newDirection, newX, newY, instructionsInput);
 
-    // Add current user data to the array
     setUserDataArray((prevArray) => {
       const newArray = [
         ...prevArray,
@@ -123,7 +121,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
   };
 
   return (
-    <div className="UserData">
+    <div className="UserData" id='user-data'>
       <label>
         Enter landing direction:
         <input type="text" value={directionInput} onChange={handleDirectionInput} />
@@ -146,9 +144,8 @@ const UserData = ({ onSendData }: UserDataProps) => {
       </label>
       <button onClick={handleInstructionsSubmit}>Start Instructions</button>
 
-      {/* Display User Data Array */}
       <div className="user-data-array">
-        <h2>User Data Array</h2>
+        <h2>Rover's final positions</h2>
         <ul>
           {userDataArray.map((userData, index) => (
             <li key={index}>
