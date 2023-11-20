@@ -1,13 +1,12 @@
-// UserData.tsx
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import '../Style/UserData.css';
+import '../Style/RoboticRover.css';
 
-interface UserDataProps {
+interface RoboticRoverProps {
   onSendData: (id: string, direction: number, x: number, y: number, sizeX: number, sizeY: number, instructions: string) => void;
 }
 
-const UserData = ({ onSendData }: UserDataProps) => {
+const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   const [idInput, setIdInput] = useState('');
   const [directionInput, setDirectionInput] = useState('');
   const [xInput, setXInput] = useState('');
@@ -15,7 +14,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
   const [sizeXInput, setSizeXInput] = useState('');
   const [sizeYInput, setSizeYInput] = useState('');
   const [instructionsInput, setInstructionsInput] = useState('');
-  const [userDataArray, setUserDataArray] = useState<any[]>([]);
+  const [roboticRoverArray, setRoboticRoverArray] = useState<any[]>([]);
   const [finalDirection, setFinalDirection] = useState<number | null>(null);
   const [finalX, setFinalX] = useState<number | null>(null);
   const [finalY, setFinalY] = useState<number | null>(null);
@@ -86,8 +85,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
       setStep(1);
     } else if (step === 1) {
       const numericDirection = mapDirectionToNumber(directionInput);
-      const id = `rover-${userDataArray.length + 1}`;
-      console.log(`Sending Data to Rover: ID: ${id}, Direction: ${mapNumberToDirection(numericDirection)}, X: ${xInput}, Y: ${yInput}, SizeX: ${sizeXInput}, SizeY: ${sizeYInput}, Instructions: ${instructionsInput}`);
+      const id = `rover-${roboticRoverArray.length + 1}`;
       onSendData(
         id,
         numericDirection,
@@ -98,7 +96,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
         instructionsInput
       );
 
-      setUserDataArray((prevArray) => [
+      setRoboticRoverArray((prevArray) => [
         ...prevArray,
         {
           id,
@@ -129,19 +127,15 @@ const UserData = ({ onSendData }: UserDataProps) => {
         switch (newDirection) {
           case 0:
             newY += 1;
-            console.log(`Moving Up: New Y: ${newY}`);
             break;
           case 90:
             newX += 1;
-            console.log(`Moving Right: New X: ${newX}`);
             break;
           case 180:
             newY -= 1;
-            console.log(`Moving Down: New Y: ${newY}`);
             break;
           case 270:
             newX -= 1;
-            console.log(`Moving Left: New X: ${newX}`);
             break;
           default:
             break;
@@ -149,19 +143,16 @@ const UserData = ({ onSendData }: UserDataProps) => {
       } else if (instruction === 'L') {
         newDirection -= 90;
         newDirection = (newDirection + 360) % 360;
-        console.log(`Turning Left: New Direction: ${newDirection}`);
       } else if (instruction === 'R') {
         newDirection += 90;
         newDirection = (newDirection + 360) % 360;
-        console.log(`Turning Right: New Direction: ${newDirection}`);
       }
     }
 
-    const id = `rover-${userDataArray.length + 1}`;
-    console.log(`Sending Data to Rover: ID: ${id}, Direction: ${mapNumberToDirection(newDirection)}, X: ${newX}, Y: ${newY}, Instructions: ${instructionsInput}`);
+    const id = `rover-${roboticRoverArray.length + 1}`;
     onSendData(id, newDirection, newX, newY, parseFloat(sizeXInput), parseFloat(sizeYInput), instructionsInput);
 
-    setUserDataArray((prevArray) => [
+    setRoboticRoverArray((prevArray) => [
       ...prevArray,
       {
         id,
@@ -181,7 +172,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
   };
 
   return (
-    <div className="UserData">
+    <div className="user-data">
       <h1 className='main-title'>Mars Rover </h1>
       {step === 0 && (
         <form id='x-y-inputs' className='form-user' onSubmit={handleButtonClick}>
@@ -233,4 +224,4 @@ const UserData = ({ onSendData }: UserDataProps) => {
   );
 };
 
-export default UserData;
+export default RoboticRover;

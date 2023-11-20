@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import './App.css';
-import GridPlateou from './Components/GridPlateou';
-import UserData from './Components/UserData';
+import Plateau from './Components/Plateau';
+import RoboticRover from './Components/RoboticRover';
 
 function App() {
   const [roverData, setRoverData] = useState({ id: '', direction: 0, x: 0, y: 0, sizeX: 0, sizeY: 0, instructions: '' });
@@ -15,8 +15,8 @@ function App() {
   return (
     <>
       <div className='mainApp'>
-        <UserData onSendData={handleSendData} />
-        <GridPlateou roverData={roverData} />
+        <RoboticRover onSendData={handleSendData} />
+        <Plateau roverData={roverData} />
       </div>
     </>
   );
