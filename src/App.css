@@ -1,5 +1,7 @@
 .mainApp{
   display: flex;
     flex-direction: column;
-    row-gap: 300px;
+margin:100px;
+font-family: monospace;
+
 }
