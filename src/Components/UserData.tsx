@@ -49,19 +49,15 @@ const UserData = ({ onSendData }: UserDataProps) => {
     console.log(`Sending Data to Rover: Direction: ${numericDirection}, X: ${xInput}, Y: ${yInput}, Instructions: ${instructionsInput}`);
     onSendData(numericDirection, parseFloat(xInput), parseFloat(yInput), instructionsInput);
 
-    setUserDataArray((prevArray) => {
-      const newArray = [
-        ...prevArray,
-        {
-          direction: numericDirection,
-          x: parseFloat(xInput),
-          y: parseFloat(yInput),
-          instructions: instructionsInput,
-        },
-      ];
-      console.log('User Data Array Updated:', newArray);
-      return newArray;
-    });
+    setUserDataArray((prevArray) => [
+      ...prevArray,
+      {
+        direction: numericDirection,
+        x: parseFloat(xInput),
+        y: parseFloat(yInput),
+        instructions: instructionsInput,
+      },
+    ]);
   };
 
   const handleInstructionsSubmit = () => {
@@ -105,23 +101,19 @@ const UserData = ({ onSendData }: UserDataProps) => {
     console.log(`Sending Data to Rover: Direction: ${newDirection}, X: ${newX}, Y: ${newY}, Instructions: ${instructionsInput}`);
     onSendData(newDirection, newX, newY, instructionsInput);
 
-    setUserDataArray((prevArray) => {
-      const newArray = [
-        ...prevArray,
-        {
-          direction: newDirection,
-          x: newX,
-          y: newY,
-          instructions: instructionsInput,
-        },
-      ];
-      console.log('User Data Array Updated:', newArray);
-      return newArray;
-    });
+    setUserDataArray((prevArray) => [
+      ...prevArray,
+      {
+        direction: newDirection,
+        x: newX,
+        y: newY,
+        instructions: instructionsInput,
+      },
+    ]);
   };
 
   return (
-    <div className="UserData" id='user-data'>
+    <div className="UserData">
       <label>
         Enter landing direction:
         <input type="text" value={directionInput} onChange={handleDirectionInput} />
@@ -144,8 +136,9 @@ const UserData = ({ onSendData }: UserDataProps) => {
       </label>
       <button onClick={handleInstructionsSubmit}>Start Instructions</button>
 
+      {/* Display User Data Array */}
       <div className="user-data-array">
-        <h2>Rover's final positions</h2>
+        <h2>User Data Array</h2>
         <ul>
           {userDataArray.map((userData, index) => (
             <li key={index}>
