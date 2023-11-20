@@ -1,7 +1,7 @@
 .mainApp{
   display: flex;
     flex-direction: column;
-margin:100px;
+margin:50px;
 font-family: monospace;
 
 }

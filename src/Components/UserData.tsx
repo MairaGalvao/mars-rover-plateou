@@ -169,21 +169,25 @@ const UserData = ({ onSendData }: UserDataProps) => {
   };
 
   return (
+
+
     <div className="UserData">
+
+      <h1 className='main-title'>Mars Rover </h1>
       {step === 0 && (
-        <form id='x-y-inputs' onSubmit={handleButtonClick}>
+        <form id='x-y-inputs' className='form-user' onSubmit={handleButtonClick}>
           <label>
             Enter X Dimension of Plateau: <input type="text" value={sizeXInput} onChange={handleSizeXInput} required />
           </label>
           <label>
             Enter Y Dimension of Plateau: <input type="text" value={sizeYInput} onChange={handleSizeYInput} required />
           </label>
-          <button type="submit">Choose</button>
+          <button className='btn-user' type="submit">Choose</button>
         </form>
       )}
 
       {step === 1 && (
-        <form id='rover-position' onSubmit={handleButtonClick}>
+        <form className='form-user' id='rover-position' onSubmit={handleButtonClick}>
           <label>
             Enter X Coordinate for Rover: <input type="text" value={xInput} onChange={handleXInput} required />
           </label>
@@ -193,16 +197,16 @@ const UserData = ({ onSendData }: UserDataProps) => {
           <label>
             Enter Rover Direction on Landing: <input type="text" value={directionInput} onChange={handleDirectionInput} required />
           </label>
-          <button type="submit">Next</button>
+          <button className='btn-user' type="submit">Next</button>
         </form>
       )}
 
       {step === 2 && (
-        <form id='instructions-input' onSubmit={handleInstructionsSubmit}>
+        <form className='form-user' id='instructions-input' onSubmit={handleInstructionsSubmit}>
           <label>
             Enter Movement Instructions (LRM string): <input type="text" value={instructionsInput} onChange={handleInstructionsInput} required />
           </label>
-          <button type="submit">Start</button>
+          <button className='btn-user' type="submit">Start</button>
         </form>
       )}
 
