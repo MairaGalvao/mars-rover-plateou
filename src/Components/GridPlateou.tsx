@@ -28,6 +28,7 @@ const GridPlateou = ({ roverData }: GridPlateouProps) => {
   }, [roverData]);
 
   const options = {
+
     scales: {
       x: {
         min: 0,
@@ -42,12 +43,16 @@ const GridPlateou = ({ roverData }: GridPlateouProps) => {
         beginAtZero: true,
       },
     },
+    plugins: {
+      legend: {
+          display: false,
+       } }
   };
 
   const data = {
     datasets: [
       {
-        label: "Rover's Plateau",
+        label: "",
         data: chartData,
         backgroundColor: 'rgba(255, 99, 132, 1)',
         pointStyle: 'triangle',
