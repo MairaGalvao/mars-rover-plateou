@@ -1,11 +1,14 @@
+// UserData.tsx
+
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import '../Style/UserData.css';
 
 interface UserDataProps {
-  onSendData: (direction: number, x: number, y: number, sizeX: number, sizeY: number, instructions: string) => void;
+  onSendData: (id: string, direction: number, x: number, y: number, sizeX: number, sizeY: number, instructions: string) => void;
 }
 
 const UserData = ({ onSendData }: UserDataProps) => {
+  const [idInput, setIdInput] = useState('');
   const [directionInput, setDirectionInput] = useState('');
   const [xInput, setXInput] = useState('');
   const [yInput, setYInput] = useState('');
@@ -48,6 +51,10 @@ const UserData = ({ onSendData }: UserDataProps) => {
     }
   };
 
+  const handleIdInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setIdInput(event.target.value);
+  };
+
   const handleDirectionInput = (event: ChangeEvent<HTMLInputElement>) => {
     setDirectionInput(event.target.value);
   };
@@ -79,8 +86,10 @@ const UserData = ({ onSendData }: UserDataProps) => {
       setStep(1);
     } else if (step === 1) {
       const numericDirection = mapDirectionToNumber(directionInput);
-      console.log(`Sending Data to Rover: Direction: ${mapNumberToDirection(numericDirection)}, X: ${xInput}, Y: ${yInput}, SizeX: ${sizeXInput}, SizeY: ${sizeYInput}, Instructions: ${instructionsInput}`);
+      const id = `rover-${userDataArray.length + 1}`;
+      console.log(`Sending Data to Rover: ID: ${id}, Direction: ${mapNumberToDirection(numericDirection)}, X: ${xInput}, Y: ${yInput}, SizeX: ${sizeXInput}, SizeY: ${sizeYInput}, Instructions: ${instructionsInput}`);
       onSendData(
+        id,
         numericDirection,
         parseFloat(xInput),
         parseFloat(yInput),
@@ -92,6 +101,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
       setUserDataArray((prevArray) => [
         ...prevArray,
         {
+          id,
           direction: mapNumberToDirection(numericDirection),
           x: parseFloat(xInput),
           y: parseFloat(yInput),
@@ -147,12 +157,14 @@ const UserData = ({ onSendData }: UserDataProps) => {
       }
     }
 
-    console.log(`Sending Data to Rover: Direction: ${mapNumberToDirection(newDirection)}, X: ${newX}, Y: ${newY}, Instructions: ${instructionsInput}`);
-    onSendData(newDirection, newX, newY, parseFloat(sizeXInput), parseFloat(sizeYInput), instructionsInput);
+    const id = `rover-${userDataArray.length + 1}`;
+    console.log(`Sending Data to Rover: ID: ${id}, Direction: ${mapNumberToDirection(newDirection)}, X: ${newX}, Y: ${newY}, Instructions: ${instructionsInput}`);
+    onSendData(id, newDirection, newX, newY, parseFloat(sizeXInput), parseFloat(sizeYInput), instructionsInput);
 
     setUserDataArray((prevArray) => [
       ...prevArray,
       {
+        id,
         direction: mapNumberToDirection(newDirection),
         x: newX,
         y: newY,
@@ -169,10 +181,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
   };
 
   return (
-
-
     <div className="UserData">
-
       <h1 className='main-title'>Mars Rover </h1>
       {step === 0 && (
         <form id='x-y-inputs' className='form-user' onSubmit={handleButtonClick}>
@@ -217,7 +226,9 @@ const UserData = ({ onSendData }: UserDataProps) => {
         </div>
       )}
 
-      
+      {step === 3 && (
+        <button className='btn-user' onClick={() => setStep(0)}>Add Another Rover</button>
+      )}
     </div>
   );
 };
