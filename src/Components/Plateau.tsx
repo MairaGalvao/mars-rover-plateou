@@ -8,10 +8,10 @@ interface PlateauProps {
   roverData: { id: string; direction: number; x: number; y: number; sizeX: number; sizeY: number; instructions: string };
 }
 
-const getRandomColor = () => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`;
+const getRandomRoverColor = () => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`;
 
 const Plateau = ({ roverData }: PlateauProps) => {
-  const [chartData, setChartData] = useState<{ id: string; x: number; y: number; direction: number }[]>([]);
+  const [rovers, setRovers] = useState<{ id: string; x: number; y: number; direction: number }[]>([]);
   const [internalDirection, setInternalDirection] = useState(0);
 
   useEffect(() => {
@@ -23,14 +23,14 @@ const Plateau = ({ roverData }: PlateauProps) => {
       roverData.sizeX !== undefined &&
       roverData.sizeY !== undefined
     ) {
-      setChartData((prevChartData) => [
+      setRovers((prevChartData) => [
         ...prevChartData,
         { id: roverData.id, x: roverData.x, y: roverData.y, direction: roverData.direction },
       ]);
 
-      const uniqueRovers = Array.from(new Set(chartData.map((rover) => rover.id)));
+      const uniqueRovers = Array.from(new Set(rovers.map((rover) => rover.id)));
       if (uniqueRovers.length > 10) {
-        setChartData((prevChartData) => prevChartData.filter((rover) => rover.id !== uniqueRovers[0]));
+        setRovers((prevChartData) => prevChartData.filter((rover) => rover.id !== uniqueRovers[0]));
       }
 
       setInternalDirection(roverData.direction);
@@ -60,10 +60,10 @@ const Plateau = ({ roverData }: PlateauProps) => {
   };
 
   const data = {
-    datasets: chartData.map((rover) => ({
+    datasets: rovers.map((rover) => ({
       label: '',
       data: [{ x: rover.x, y: rover.y }],
-      backgroundColor: getRandomColor(),
+      backgroundColor: getRandomRoverColor(),
       pointStyle: 'triangle',
       radius: 20,
       pointRotation: rover.direction,
