@@ -60,6 +60,7 @@ const Plateau = ({ roverData }: PlateauProps) => {
   };
 
   const data = {
+    type: 'line',
     datasets: rovers.map((rover) => ({
       label: '',
       data: [{ x: rover.x, y: rover.y }],
@@ -68,6 +69,7 @@ const Plateau = ({ roverData }: PlateauProps) => {
       radius: 20,
       pointRotation: rover.direction,
       key: rover.id,
+      
     })),
   };
 

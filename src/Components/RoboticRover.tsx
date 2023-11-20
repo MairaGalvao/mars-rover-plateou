@@ -8,20 +8,20 @@ interface RoboticRoverProps {
 
 const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   const [idInput, setIdInput] = useState('');
-  const [directionInput, setDirectionInput] = useState('');
-  const [xInput, setXInput] = useState('');
-  const [yInput, setYInput] = useState('');
-  const [sizeXInput, setSizeXInput] = useState('');
-  const [sizeYInput, setSizeYInput] = useState('');
-  const [instructionsInput, setInstructionsInput] = useState('');
-  const [roboticRoverArray, setRoboticRoverArray] = useState<any[]>([]);
-  const [finalDirection, setFinalDirection] = useState<number | null>(null);
-  const [finalX, setFinalX] = useState<number | null>(null);
-  const [finalY, setFinalY] = useState<number | null>(null);
-  const [step, setStep] = useState<number>(0);
+  const [initPositionUser, setInitPositionUser] = useState('');
+  const [initXCoordinateUser, setInitXCoordinateUser] = useState('');
+  const [initYCoordinateUser, setInitYCoordinateUser] = useState('');
+  const [sizeXPlateauUser, setSizeXPlateauUser] = useState('');
+  const [sizeYPlateauUser, setSizeYPlateauUser] = useState('');
+  const [instructionsUser, setInstructionsUser] = useState('');
+  const [multipleRovers, setMultipleRovers] = useState<any[]>([]);
+  const [finalRoverCardinalPointer, setFinalRoverCardinalPointer] = useState<number | null>(null);
+  const [finalRoverCoordinateX, setFinalRoverCoordinateX] = useState<number | null>(null);
+  const [finalRoverCoordinateY, setFinalCRoverCoordinateY] = useState<number | null>(null);
+  const [stepForm, setStepForm] = useState<number>(0);
 
-  const mapDirectionToNumber = (direction: string): number => {
-    switch (direction.toUpperCase()) {
+  const changeCardinalPointsToNumber = (cardinalName: string): number => {
+    switch (cardinalName.toUpperCase()) {
       case 'N':
         return 0;
       case 'E':
@@ -31,12 +31,12 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       case 'W':
         return 270;
       default:
-        return parseFloat(direction) || 0;
+        return parseFloat(cardinalName) || 0;
     }
   };
 
-  const mapNumberToDirection = (numericDirection: number): string => {
-    switch (numericDirection) {
+  const changeNumberToCardinalPoints = (cardinalDegrees: number): string => {
+    switch (cardinalDegrees) {
       case 0:
         return 'N';
       case 90:
@@ -46,7 +46,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       case 270:
         return 'W';
       default:
-        return numericDirection.toString();
+        return cardinalDegrees.toString();
     }
   };
 
@@ -55,74 +55,83 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   };
 
   const handleDirectionInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setDirectionInput(event.target.value);
+    setInitPositionUser(event.target.value);
   };
 
   const handleXInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setXInput(event.target.value);
-  };
+        setInitXCoordinateUser(event.target.value);
+
+        if(sizeXPlateauUser < event.target.value){
+          alert('Your X coordinates initial value are bigger than the actual size of the plateou')
+        }
+
+      };
 
   const handleYInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setYInput(event.target.value);
+    setInitYCoordinateUser(event.target.value);
+
+    if(sizeYPlateauUser < event.target.value ){
+      alert('Your Y coordinates initial value are bigger than the actual size of the plateou')
+    }
   };
 
   const handleSizeXInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setSizeXInput(event.target.value);
+    setSizeXPlateauUser(event.target.value);
   };
 
   const handleSizeYInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setSizeYInput(event.target.value);
+    setSizeYPlateauUser(event.target.value);
   };
 
   const handleInstructionsInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setInstructionsInput(event.target.value);
+    setInstructionsUser(event.target.value);
   };
 
   const handleButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
-    if (step === 0) {
-      setStep(1);
-    } else if (step === 1) {
-      const numericDirection = mapDirectionToNumber(directionInput);
-      const id = `rover-${roboticRoverArray.length + 1}`;
+    if (stepForm === 0) {
+      setStepForm(1);
+    } else if (stepForm === 1) {
+      const numericDirection = changeCardinalPointsToNumber(initPositionUser);
+      const id = `rover-${multipleRovers.length + 1}`;
       onSendData(
         id,
         numericDirection,
-        parseFloat(xInput),
-        parseFloat(yInput),
-        parseFloat(sizeXInput),
-        parseFloat(sizeYInput),
-        instructionsInput
+        parseFloat(initXCoordinateUser),
+        parseFloat(initYCoordinateUser),
+        parseFloat(sizeXPlateauUser),
+        parseFloat(sizeYPlateauUser),
+        instructionsUser
       );
 
-      setRoboticRoverArray((prevArray) => [
+      setMultipleRovers((prevArray) => [
         ...prevArray,
         {
           id,
-          direction: mapNumberToDirection(numericDirection),
-          x: parseFloat(xInput),
-          y: parseFloat(yInput),
-          sizeX: parseFloat(sizeXInput),
-          sizeY: parseFloat(sizeYInput),
-          instructions: instructionsInput,
+          direction: changeNumberToCardinalPoints(numericDirection),
+          x: parseFloat(initXCoordinateUser),
+          y: parseFloat(initYCoordinateUser),
+          sizeX: parseFloat(sizeXPlateauUser),
+          sizeY: parseFloat(sizeYPlateauUser),
+          instructions: instructionsUser,
         },
       ]);
 
-      setStep(2);
-    } else if (step === 2) {
-      setStep(0);
+      setStepForm(2);
+    } else if (stepForm === 2) {
+      setStepForm(0);
     }
   };
 
   const handleInstructionsSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    let newX = parseFloat(xInput);
-    let newY = parseFloat(yInput);
-    let newDirection = mapDirectionToNumber(directionInput);
+    let newX = parseFloat(initXCoordinateUser);
+    let newY = parseFloat(initYCoordinateUser);
+    let newDirection = changeCardinalPointsToNumber(initPositionUser);
 
-    for (const instruction of instructionsInput.split('')) {
+    for (const instruction of instructionsUser.split('')) {
       if (instruction === 'M') {
         switch (newDirection) {
           case 0:
@@ -149,76 +158,76 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       }
     }
 
-    const id = `rover-${roboticRoverArray.length + 1}`;
-    onSendData(id, newDirection, newX, newY, parseFloat(sizeXInput), parseFloat(sizeYInput), instructionsInput);
+    const id = `rover-${multipleRovers.length + 1}`;
+    onSendData(id, newDirection, newX, newY, parseFloat(sizeXPlateauUser), parseFloat(sizeYPlateauUser), instructionsUser);
 
-    setRoboticRoverArray((prevArray) => [
+    setMultipleRovers((prevArray) => [
       ...prevArray,
       {
         id,
-        direction: mapNumberToDirection(newDirection),
+        direction: changeNumberToCardinalPoints(newDirection),
         x: newX,
         y: newY,
-        sizeX: parseFloat(sizeXInput),
-        sizeY: parseFloat(sizeYInput),
-        instructions: instructionsInput,
+        sizeX: parseFloat(sizeXPlateauUser),
+        sizeY: parseFloat(sizeYPlateauUser),
+        instructions: instructionsUser,
       },
     ]);
 
-    setFinalDirection(newDirection);
-    setFinalX(newX);
-    setFinalY(newY);
-    setStep(0);
+    setFinalRoverCardinalPointer(newDirection);
+    setFinalRoverCoordinateX(newX);
+    setFinalCRoverCoordinateY(newY);
+    setStepForm(0);
   };
 
   return (
     <div className="user-data">
       <h1 className='main-title'>Mars Rover </h1>
-      {step === 0 && (
+      {stepForm === 0 && (
         <form id='x-y-inputs' className='form-user' onSubmit={handleButtonClick}>
           <label>
-            Enter X Dimension of Plateau: <input type="text" value={sizeXInput} onChange={handleSizeXInput} required />
+            Enter X Dimension of Plateau: <input type="text" value={sizeXPlateauUser} onChange={handleSizeXInput} required />
           </label>
           <label>
-            Enter Y Dimension of Plateau: <input type="text" value={sizeYInput} onChange={handleSizeYInput} required />
+            Enter Y Dimension of Plateau: <input type="text" value={sizeYPlateauUser} onChange={handleSizeYInput} required />
           </label>
           <button className='btn-user' type="submit">Choose</button>
         </form>
       )}
 
-      {step === 1 && (
+      {stepForm === 1 && (
         <form className='form-user' id='rover-position' onSubmit={handleButtonClick}>
           <label>
-            Enter X Coordinate for Rover: <input type="text" value={xInput} onChange={handleXInput} required />
+            Enter X Coordinate for Rover: <input type="text" value={initXCoordinateUser} onChange={handleXInput} required />
           </label>
           <label>
-            Enter Y Coordinate for Rover: <input type="text" value={yInput} onChange={handleYInput} required />
+            Enter Y Coordinate for Rover: <input type="text" value={initYCoordinateUser} onChange={handleYInput} required />
           </label>
           <label>
-            Enter Rover Direction on Landing: <input type="text" value={directionInput} onChange={handleDirectionInput} required />
+            Enter Rover Direction on Landing: <input type="text" value={initPositionUser} onChange={handleDirectionInput} required />
           </label>
           <button className='btn-user' type="submit">Next</button>
         </form>
       )}
 
-      {step === 2 && (
+      {stepForm === 2 && (
         <form className='form-user' id='instructions-input' onSubmit={handleInstructionsSubmit}>
           <label>
-            Enter Movement Instructions (LRM string): <input type="text" value={instructionsInput} onChange={handleInstructionsInput} required />
+            Enter Movement Instructions (LRM string): <input type="text" value={instructionsUser} onChange={handleInstructionsInput} required />
           </label>
           <button className='btn-user' type="submit">Start</button>
         </form>
       )}
 
-      {finalDirection !== null && (
+      {finalRoverCardinalPointer !== null && (
         <div className="final-direction">
           <h2>Final Rover's Position</h2>
-          <p>Final Position: {finalX} {finalY} {mapNumberToDirection(finalDirection)}</p>
+          <p>Final Position: {finalRoverCoordinateX} {finalRoverCoordinateY} {changeNumberToCardinalPoints(finalRoverCardinalPointer)}</p>
         </div>
       )}
 
-      {step === 3 && (
-        <button className='btn-user' onClick={() => setStep(0)}>Add Another Rover</button>
+      {stepForm === 3 && (
+        <button className='btn-user' onClick={() => setStepForm(0)}>Add Another Rover</button>
       )}
     </div>
   );
