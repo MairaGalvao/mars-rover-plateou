@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import '../Style/UserData.css';
 
 interface UserDataProps {
@@ -13,6 +13,7 @@ const UserData = ({ onSendData }: UserDataProps) => {
   const [sizeYInput, setSizeYInput] = useState('');
   const [instructionsInput, setInstructionsInput] = useState('');
   const [userDataArray, setUserDataArray] = useState<any[]>([]);
+  const [step, setStep] = useState<number>(0);
 
   const mapDirectionToNumber = (direction: string): number => {
     switch (direction.toUpperCase()) {
@@ -53,32 +54,44 @@ const UserData = ({ onSendData }: UserDataProps) => {
     setInstructionsInput(event.target.value);
   };
 
-  const handleButtonClick = () => {
-    const numericDirection = mapDirectionToNumber(directionInput);
-    console.log(`Sending Data to Rover: Direction: ${numericDirection}, X: ${xInput}, Y: ${yInput}, SizeX: ${sizeXInput}, SizeY: ${sizeYInput}, Instructions: ${instructionsInput}`);
-    onSendData(
-      numericDirection,
-      parseFloat(xInput),
-      parseFloat(yInput),
-      parseFloat(sizeXInput),
-      parseFloat(sizeYInput),
-      instructionsInput
-    );
+  const handleButtonClick = (event: FormEvent) => {
+    event.preventDefault();
 
-    setUserDataArray((prevArray) => [
-      ...prevArray,
-      {
-        direction: numericDirection,
-        x: parseFloat(xInput),
-        y: parseFloat(yInput),
-        sizeX: parseFloat(sizeXInput),
-        sizeY: parseFloat(sizeYInput),
-        instructions: instructionsInput,
-      },
-    ]);
+    if (step === 0) {
+      setStep(1);
+    } else if (step === 1) {
+      const numericDirection = mapDirectionToNumber(directionInput);
+      console.log(`Sending Data to Rover: Direction: ${numericDirection}, X: ${xInput}, Y: ${yInput}, SizeX: ${sizeXInput}, SizeY: ${sizeYInput}, Instructions: ${instructionsInput}`);
+      onSendData(
+        numericDirection,
+        parseFloat(xInput),
+        parseFloat(yInput),
+        parseFloat(sizeXInput),
+        parseFloat(sizeYInput),
+        instructionsInput
+      );
+
+      setUserDataArray((prevArray) => [
+        ...prevArray,
+        {
+          direction: numericDirection,
+          x: parseFloat(xInput),
+          y: parseFloat(yInput),
+          sizeX: parseFloat(sizeXInput),
+          sizeY: parseFloat(sizeYInput),
+          instructions: instructionsInput,
+        },
+      ]);
+
+      setStep(2);
+    } else if (step === 2) {
+      setStep(0);
+    }
   };
 
-  const handleInstructionsSubmit = () => {
+  const handleInstructionsSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
     let newX = parseFloat(xInput);
     let newY = parseFloat(yInput);
     let newDirection = mapDirectionToNumber(directionInput);
@@ -130,41 +143,53 @@ const UserData = ({ onSendData }: UserDataProps) => {
         instructions: instructionsInput,
       },
     ]);
+
+    setStep(0);
   };
 
   return (
     <div className="UserData">
-      <label>
-        Enter size X of plateau:
-        <input type="text" value={sizeXInput} onChange={handleSizeXInput} />
-      </label>
-      <label>
-        Enter size Y of plateau:
-        <input type="text" value={sizeYInput} onChange={handleSizeYInput} />
-      </label>
-      <button onClick={handleButtonClick}>Send Data to Rover</button>
+      {step === 0 && (
+        <form id='x-y-inputs' onSubmit={handleButtonClick}>
+          <label>
+            Enter size X of plateau:
+            <input type="text" value={sizeXInput} onChange={handleSizeXInput} required />
+          </label>
+          <label>
+            Enter size Y of plateau:
+            <input type="text" value={sizeYInput} onChange={handleSizeYInput} required />
+          </label>
+          <button type="submit">Next</button>
+        </form>
+      )}
 
-      <label>
-        Enter landing direction:
-        <input type="text" value={directionInput} onChange={handleDirectionInput} />
-      </label>
-      <label>
-        Enter X coordinate:
-        <input type="text" value={xInput} onChange={handleXInput} />
-      </label>
-      <label>
-        Enter Y coordinate:
-        <input type="text" value={yInput} onChange={handleYInput} />
-      </label>
-      <button onClick={handleButtonClick}>Send Data to Rover</button>
+      {step === 1 && (
+        <form id='rover-position' onSubmit={handleButtonClick}>
+          <label>
+            Enter landing direction:
+            <input type="text" value={directionInput} onChange={handleDirectionInput} required />
+          </label>
+          <label>
+            Enter X coordinate:
+            <input type="text" value={xInput} onChange={handleXInput} required />
+          </label>
+          <label>
+            Enter Y coordinate:
+            <input type="text" value={yInput} onChange={handleYInput} required />
+          </label>
+          <button type="submit">Next</button>
+        </form>
+      )}
 
-      <hr />
-
-      <label>
-        Enter instructions (LRM string):
-        <input type="text" value={instructionsInput} onChange={handleInstructionsInput} />
-      </label>
-      <button onClick={handleInstructionsSubmit}>Start Instructions</button>
+      {step === 2 && (
+        <form id='instructions-input' onSubmit={handleInstructionsSubmit}>
+          <label>
+            Enter instructions (LRM string):
+            <input type="text" value={instructionsInput} onChange={handleInstructionsInput} required />
+          </label>
+          <button type="submit">Start Instructions</button>
+        </form>
+      )}
 
       {/* Display User Data Array */}
       <div className="user-data-array">
