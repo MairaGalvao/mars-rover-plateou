@@ -7,7 +7,7 @@ import { Scatter } from 'react-chartjs-2';
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
 interface GridPlateouProps {
-  roverData: { direction: number; x: number; y: number };
+  roverData: { direction: number; x: number; y: number; sizeX: number; sizeY: number; instructions: string };
 }
 
 const GridPlateou = ({ roverData }: GridPlateouProps) => {
@@ -15,16 +15,30 @@ const GridPlateou = ({ roverData }: GridPlateouProps) => {
   const [internalDirection, setInternalDirection] = useState(0);
 
   useEffect(() => {
-    if (roverData.x !== undefined && roverData.y !== undefined && roverData.direction !== undefined) {
+    if (
+      roverData.x !== undefined &&
+      roverData.y !== undefined &&
+      roverData.direction !== undefined &&
+      roverData.sizeX !== undefined &&
+      roverData.sizeY !== undefined
+    ) {
       setChartData((prevChartData) => [...prevChartData, { x: roverData.x, y: roverData.y }]);
       setInternalDirection(roverData.direction);
     }
   }, [roverData]);
 
-  console.log(internalDirection, 'internalDirection');
   const options = {
     scales: {
+      x: {
+        min: 0,
+        max: roverData.sizeX,
+        step: 1.0,
+        beginAtZero: true,
+      },
       y: {
+        min: 0,
+        max: roverData.sizeY,
+        step: 1.0,
         beginAtZero: true,
       },
     },
@@ -33,7 +47,7 @@ const GridPlateou = ({ roverData }: GridPlateouProps) => {
   const data = {
     datasets: [
       {
-        label: "Rover's Plateou",
+        label: "Rover's Plateau",
         data: chartData,
         backgroundColor: 'rgba(255, 99, 132, 1)',
         pointStyle: 'triangle',
@@ -44,7 +58,7 @@ const GridPlateou = ({ roverData }: GridPlateouProps) => {
   };
 
   return (
-    <div className='plateou'>
+    <div className='plateau'>
       <Scatter options={options} data={data} />
     </div>
   );
