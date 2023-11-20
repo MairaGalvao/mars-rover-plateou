@@ -16,7 +16,7 @@ function App() {
     <>
       <div className='mainApp'>
         <RoboticRover onSendData={handleSendData} />
-        <Plateau roverData={roverData} />
+        <Plateau roverData={roverData} colorMap={['red', 'pink', 'blue', 'lightBlue']}  />
       </div>
     </>
   );

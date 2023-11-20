@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
 
@@ -6,13 +6,11 @@ ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
 interface PlateauProps {
   roverData: { id: string; direction: number; x: number; y: number; sizeX: number; sizeY: number; instructions: string };
+  colorMap: string[]; 
 }
 
-const getRandomRoverColor = () => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`;
-
-const Plateau = ({ roverData }: PlateauProps) => {
+const Plateau = ({ roverData, colorMap }: PlateauProps) => {
   const [rovers, setRovers] = useState<{ id: string; x: number; y: number; direction: number }[]>([]);
-  const [internalDirection, setInternalDirection] = useState(0);
 
   useEffect(() => {
     if (
@@ -23,17 +21,19 @@ const Plateau = ({ roverData }: PlateauProps) => {
       roverData.sizeX !== undefined &&
       roverData.sizeY !== undefined
     ) {
-      setRovers((prevChartData) => [
-        ...prevChartData,
+      setRovers((prevRovers) => [
+        ...prevRovers,
         { id: roverData.id, x: roverData.x, y: roverData.y, direction: roverData.direction },
       ]);
 
-      const uniqueRovers = Array.from(new Set(rovers.map((rover) => rover.id)));
-      if (uniqueRovers.length > 10) {
-        setRovers((prevChartData) => prevChartData.filter((rover) => rover.id !== uniqueRovers[0]));
-      }
-
-      setInternalDirection(roverData.direction);
+      setRovers((prevRovers) => {
+        const uniqueRovers = Array.from(new Set(prevRovers.map((rover) => rover.id)));
+        if (uniqueRovers.length > 10) {
+          return prevRovers.filter((rover) => rover.id !== uniqueRovers[0]);
+        } else {
+          return prevRovers;
+        }
+      });
     }
   }, [roverData]);
 
@@ -59,23 +59,24 @@ const Plateau = ({ roverData }: PlateauProps) => {
     },
   };
 
-  const data = {
-    type: 'line',
-    datasets: rovers.map((rover) => ({
-      label: '',
-      data: [{ x: rover.x, y: rover.y }],
-      backgroundColor: getRandomRoverColor(),
-      pointStyle: 'triangle',
-      radius: 20,
-      pointRotation: rover.direction,
-      key: rover.id,
-      
-    })),
+  const pointData = {
+    datasets: rovers.map((rover, index) => {
+      const color = colorMap[index % colorMap.length]; 
+      return {
+        label: '',
+        data: [{ x: rover.x, y: rover.y }],
+        backgroundColor: color, 
+        pointStyle: 'triangle',
+        radius: 20,
+        pointRotation: rover.direction,
+        key: rover.id,
+      };
+    }),
   };
 
   return (
     <div className='plateau'>
-      <Scatter options={options} data={data} />
+      <Scatter options={options} data={{ datasets: pointData.datasets }} />
     </div>
   );
 };

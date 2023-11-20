@@ -58,20 +58,21 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     setInitPositionUser(event.target.value);
   };
 
+
   const handleXInput = (event: ChangeEvent<HTMLInputElement>) => {
-        setInitXCoordinateUser(event.target.value);
+    setInitXCoordinateUser(event.target.value);
 
-        if(sizeXPlateauUser < event.target.value){
-          alert('Your X coordinates initial value are bigger than the actual size of the plateou')
-        }
-
-      };
-
+    if (parseFloat(event.target.value) > parseFloat(sizeXPlateauUser)) {
+      alert('Your X coordinates initial value is bigger than the actual size of the plateau');
+    } else {
+    }
+  };
   const handleYInput = (event: ChangeEvent<HTMLInputElement>) => {
     setInitYCoordinateUser(event.target.value);
 
-    if(sizeYPlateauUser < event.target.value ){
-      alert('Your Y coordinates initial value are bigger than the actual size of the plateou')
+    if (parseFloat(event.target.value) > parseFloat(sizeYPlateauUser)) {
+      alert('Your Y coordinates initial value is bigger than the actual size of the plateau');
+    } else {
     }
   };
 
