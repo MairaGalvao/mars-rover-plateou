@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import './App.css';
-import UserData from './Components/UserData';
 import GridPlateou from './Components/GridPlateou';
+import UserData from './Components/UserData';
 
 function App() {
-  const [roverData, setRoverData] = useState({ direction: 0, x: 2, y: 4, instructions: '' });
+  const [roverData, setRoverData] = useState<{ direction: number; x: number; y: number; instructions: string } | null>(null);
 
   const handleSendData = (direction: number, x: number, y: number, instructions: string) => {
     setRoverData({ direction, x, y, instructions });
@@ -16,7 +16,7 @@ function App() {
     <>
       <div className='mainApp'>
         <UserData onSendData={handleSendData} />
-        <GridPlateou roverData={roverData} />
+        {roverData !== null && <GridPlateou roverData={roverData} />}
       </div>
     </>
   );
