@@ -219,12 +219,12 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       {stepForm === 0 && (
         <form id="x-y-inputs" className="form-user" onSubmit={handleButtonClick}>
           <label className='label'>
-            Enter X Dimension of Plateau: <input type="text" value={sizeXPlateauUser} onChange={handleSizeXInput} required />
+            Enter X Dimension of Plateau: <input type="text" id='x-plateau-size' value={sizeXPlateauUser} onChange={handleSizeXInput} required />
           </label >
           <label className='label'>
-            Enter Y Dimension of Plateau: <input type="text" value={sizeYPlateauUser} onChange={handleSizeYInput} required />
+            Enter Y Dimension of Plateau: <input type="text" id='y-plateau-size' value={sizeYPlateauUser} onChange={handleSizeYInput} required />
           </label>
-          <button className="btn-user" type="submit">
+          <button id='btn-size-plateau' className="btn-user" type="submit">
             Choose
           </button>
         </form>
@@ -233,15 +233,15 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       {stepForm === 1 && (
         <form className="form-user" id="rover-position" onSubmit={handleButtonClick}>
           <label className='label'>
-            Enter X Coordinate for Rover: <input type="text" value={initXCoordinateUser} onChange={handleXInput} required />
+            Enter X Coordinate for Rover: <input id='x-init-coord' type="text" value={initXCoordinateUser} onChange={handleXInput} required />
           </label>
           <label className='label'>
-            Enter Y Coordinate for Rover: <input type="text" value={initYCoordinateUser} onChange={handleYInput} required />
+            Enter Y Coordinate for Rover: <input id='y-init-coord' type="text" value={initYCoordinateUser} onChange={handleYInput} required />
           </label>
           <label className='label'>
-            Enter Rover Direction on Landing: <input type="text" value={initPositionUser} onChange={handleDirectionInput} required />
+            Enter Rover Direction on Landing: <input  id='init-point' type="text" value={initPositionUser} onChange={handleDirectionInput} required />
           </label>
-          <button className="btn-user" type="submit">
+          <button className="btn-user" id='btn-rover-init-position' type="submit">
             Next
           </button>
         </form>
@@ -251,16 +251,16 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
         <form className="form-user" id="instructions-input" onSubmit={handleInstructionsSubmit}>
           <label className='label'>
             Enter Movement Instructions (LRM string):{' '}
-            <input type="text" value={instructionsUser} onChange={handleInstructionsInput} required />
+            <input id= 'instructions-user' type="text" value={instructionsUser} onChange={handleInstructionsInput} required />
           </label>
-          <button className="btn-user" type="submit">
+          <button className="btn-user" type="submit" id='btn-instructions'>
             Start
           </button>
         </form>
       )}
 
       {finalRoverCardinalPointer !== null && (
-        <div className="final-direction">
+        <div className="final-direction" id='final-position-rover'>
           <h2>Final Rover's Position</h2>
           <p>
             Final Position: {finalRoverCoordinateX} {finalRoverCoordinateY}{' '}
