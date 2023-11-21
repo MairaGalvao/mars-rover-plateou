@@ -32,7 +32,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     if (storedStep) {
       setStepForm(parseInt(storedStep, 10));
     }
-  
+
     return () => {
       localStorage.removeItem('roverStep');
     };
@@ -73,7 +73,14 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   };
 
   const handleDirectionInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setInitPositionUser(event.target.value);
+    const input = event.target.value.toUpperCase();
+
+    if (!/^[NSEW]$/.test(input)) {
+      alert('Invalid input. Please enter N, S, E, or W for Rover Direction.');
+      return;
+    }
+
+    setInitPositionUser(input);
   };
 
   const handleXInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +108,14 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   };
 
   const handleInstructionsInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setInstructionsUser(event.target.value);
+    const input = event.target.value.toUpperCase();
+
+    if (!/^[MRL, ]+$/.test(input)) {
+      alert('Invalid input. Please enter only M, R, L, with space or comma.');
+      return;
+    }
+
+    setInstructionsUser(input);
   };
 
   const handleButtonClick = (event: FormEvent) => {
