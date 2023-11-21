@@ -1,9 +1,16 @@
-
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import '../Style/RoboticRover.css';
 
 interface RoboticRoverProps {
-  onSendData: (id: string, direction: number, x: number, y: number, sizeX: number, sizeY: number, instructions: string) => void;
+  onSendData: (
+    id: string,
+    direction: number,
+    x: number,
+    y: number,
+    sizeX: number,
+    sizeY: number,
+    instructions: string
+  ) => void;
 }
 
 const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
@@ -19,6 +26,17 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   const [finalRoverCoordinateX, setFinalRoverCoordinateX] = useState<number | null>(null);
   const [finalRoverCoordinateY, setFinalCRoverCoordinateY] = useState<number | null>(null);
   const [stepForm, setStepForm] = useState<number>(0);
+
+  useEffect(() => {
+    const storedStep = localStorage.getItem('roverStep');
+    if (storedStep) {
+      setStepForm(parseInt(storedStep, 10));
+    }
+  
+    return () => {
+      localStorage.removeItem('roverStep');
+    };
+  }, [setStepForm]);
 
   const changeCardinalPointsToNumber = (cardinalName: string): number => {
     switch (cardinalName.toUpperCase()) {
@@ -58,21 +76,19 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     setInitPositionUser(event.target.value);
   };
 
-
   const handleXInput = (event: ChangeEvent<HTMLInputElement>) => {
     setInitXCoordinateUser(event.target.value);
 
     if (parseFloat(event.target.value) > parseFloat(sizeXPlateauUser)) {
       alert('Your X coordinates initial value is bigger than the actual size of the plateau');
-    } else {
     }
   };
+
   const handleYInput = (event: ChangeEvent<HTMLInputElement>) => {
     setInitYCoordinateUser(event.target.value);
 
     if (parseFloat(event.target.value) > parseFloat(sizeYPlateauUser)) {
       alert('Your Y coordinates initial value is bigger than the actual size of the plateau');
-    } else {
     }
   };
 
@@ -121,8 +137,10 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
 
       setStepForm(2);
     } else if (stepForm === 2) {
-      setStepForm(0);
+      setStepForm(1);
     }
+    // Save the current step to local storage
+    localStorage.setItem('roverStep', stepForm.toString());
   };
 
   const handleInstructionsSubmit = (event: FormEvent) => {
@@ -178,26 +196,29 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     setFinalRoverCardinalPointer(newDirection);
     setFinalRoverCoordinateX(newX);
     setFinalCRoverCoordinateY(newY);
-    setStepForm(0);
+    setStepForm(1);
+    localStorage.setItem('roverStep', '1');
   };
 
   return (
     <div className="user-data">
-      <h1 className='main-title'>Mars Rover </h1>
+      <h1 className="main-title">Mars Rover </h1>
       {stepForm === 0 && (
-        <form id='x-y-inputs' className='form-user' onSubmit={handleButtonClick}>
+        <form id="x-y-inputs" className="form-user" onSubmit={handleButtonClick}>
           <label>
             Enter X Dimension of Plateau: <input type="text" value={sizeXPlateauUser} onChange={handleSizeXInput} required />
           </label>
           <label>
             Enter Y Dimension of Plateau: <input type="text" value={sizeYPlateauUser} onChange={handleSizeYInput} required />
           </label>
-          <button className='btn-user' type="submit">Choose</button>
+          <button className="btn-user" type="submit">
+            Choose
+          </button>
         </form>
       )}
 
       {stepForm === 1 && (
-        <form className='form-user' id='rover-position' onSubmit={handleButtonClick}>
+        <form className="form-user" id="rover-position" onSubmit={handleButtonClick}>
           <label>
             Enter X Coordinate for Rover: <input type="text" value={initXCoordinateUser} onChange={handleXInput} required />
           </label>
@@ -207,28 +228,38 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
           <label>
             Enter Rover Direction on Landing: <input type="text" value={initPositionUser} onChange={handleDirectionInput} required />
           </label>
-          <button className='btn-user' type="submit">Next</button>
+          <button className="btn-user" type="submit">
+            Next
+          </button>
         </form>
       )}
 
       {stepForm === 2 && (
-        <form className='form-user' id='instructions-input' onSubmit={handleInstructionsSubmit}>
+        <form className="form-user" id="instructions-input" onSubmit={handleInstructionsSubmit}>
           <label>
-            Enter Movement Instructions (LRM string): <input type="text" value={instructionsUser} onChange={handleInstructionsInput} required />
+            Enter Movement Instructions (LRM string):{' '}
+            <input type="text" value={instructionsUser} onChange={handleInstructionsInput} required />
           </label>
-          <button className='btn-user' type="submit">Start</button>
+          <button className="btn-user" type="submit">
+            Start
+          </button>
         </form>
       )}
 
       {finalRoverCardinalPointer !== null && (
         <div className="final-direction">
           <h2>Final Rover's Position</h2>
-          <p>Final Position: {finalRoverCoordinateX} {finalRoverCoordinateY} {changeNumberToCardinalPoints(finalRoverCardinalPointer)}</p>
+          <p>
+            Final Position: {finalRoverCoordinateX} {finalRoverCoordinateY}{' '}
+            {changeNumberToCardinalPoints(finalRoverCardinalPointer)}
+          </p>
         </div>
       )}
 
       {stepForm === 3 && (
-        <button className='btn-user' onClick={() => setStepForm(0)}>Add Another Rover</button>
+        <button className="btn-user" onClick={() => setStepForm(0)}>
+          Add Another Rover
+        </button>
       )}
     </div>
   );
