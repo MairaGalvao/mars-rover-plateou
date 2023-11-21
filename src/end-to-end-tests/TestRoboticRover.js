@@ -1,6 +1,19 @@
-// TODO: remove timeouts 
-
 const puppeteer = require("puppeteer");
+
+const typeInput = async (page, selector, text) => {
+  await page.waitForSelector(selector);
+  await page.focus(selector);
+  await page.keyboard.type(text);
+};
+
+const clickElement = async (page, selector) => {
+  await page.waitForSelector(selector);
+  await page.click(selector);
+};
+
+const waitForElement = async (page, selector) => {
+  await page.waitForSelector(selector);
+};
 
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
@@ -10,44 +23,22 @@ const puppeteer = require("puppeteer");
     await page.goto("http://localhost:3000/");
 
     // Plateau size's flow
-    await page.waitForSelector("#x-plateau-size");
-    await page.focus("#x-plateau-size");
-    await page.keyboard.type("15");
-    await page.waitForSelector("#y-plateau-size");
-    await page.focus("#y-plateau-size");
-    await page.keyboard.type("15");
-    await page.waitForTimeout(5000);
-
-    await page.waitForSelector("#btn-size-plateau");
-    await page.click("#btn-size-plateau");
+    await typeInput(page, "#x-plateau-size", "15");
+    await typeInput(page, "#y-plateau-size", "15");
+    await page.waitForTimeout(2000);
+    await clickElement(page, "#btn-size-plateau");
     await page.waitForTimeout(2000);
 
-    // Flow Rover's initial coordination
-    await page.waitForSelector("#x-init-coord");
-    await page.focus("#x-init-coord");
-    await page.keyboard.type("1");
-
-    await page.waitForSelector("#y-init-coord");
-    await page.focus("#y-init-coord");
-    await page.keyboard.type("2");
-    await page.waitForSelector("#init-point");
-    await page.focus("#init-point");
-    await page.keyboard.type("N");
-
+    await typeInput(page, "#x-init-coord", "1");
+    await typeInput(page, "#y-init-coord", "2");
+    await typeInput(page, "#init-point", "N");
     await page.waitForTimeout(2000);
-    await page.waitForSelector("#btn-rover-init-position");
-    await page.click("#btn-rover-init-position");
+    await clickElement(page, "#btn-rover-init-position");
     await page.waitForTimeout(2000);
 
-    // Flow instructions user to the Rover
-    await page.waitForSelector("#instructions-user");
-    await page.focus("#instructions-user");
-
-    await page.keyboard.type("LMLMLMLMM");
-    await page.waitForSelector("#btn-instructions");
-    await page.click("#btn-instructions");
-
-    await page.waitForSelector("#final-position-rover");
+    await typeInput(page, "#instructions-user", "LMLMLMLMM");
+    await clickElement(page, "#btn-instructions");
+    await waitForElement(page, "#final-position-rover");
 
     // Expected output: Rover's final-position | 1 3
     const expected_result = "1 3 N";
@@ -57,9 +48,8 @@ const puppeteer = require("puppeteer");
 
     if (!finalPosition.includes(expected_result)) {
       console.error(`Unexpected final position: ${finalPosition}`);
-    }
-    else{
-        console.log('TEST OK')
+    } else {
+      console.log('Test Robotic Rover passed');
     }
 
     await page.waitForTimeout(5000);
