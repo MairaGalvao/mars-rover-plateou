@@ -6,8 +6,16 @@ import Plateau from './Components/Plateau';
 import RoboticRover from './Components/RoboticRover';
 
 function App() {
-  const [roverData, setRoverData] = useState({ id: '', direction: 0, x: 0, y: 0, sizeX: 0, sizeY: 0, instructions: '' });
-
+  const [roverData, setRoverData] = useState({
+    id: '',
+    direction: null as number | null,
+    x: null as number | null,
+    y: null as number | null,
+    sizeX: null as number | null,
+    sizeY: null as number | null,
+    instructions: '',
+  });
+  
   const handleSendData = (id: string, direction: number, x: number, y: number, sizeX: number, sizeY: number, instructions: string) => {
     setRoverData({ id, direction, x, y, sizeX, sizeY, instructions });
   };

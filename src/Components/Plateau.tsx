@@ -5,8 +5,16 @@ import { Scatter } from 'react-chartjs-2';
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
 interface PlateauProps {
-  roverData: { id: string; direction: number; x: number; y: number; sizeX: number; sizeY: number; instructions: string };
-  colorMap: string[]; 
+  roverData: {
+    id: string;
+    direction: number | null;
+    x: number | null;
+    y: number | null;
+    sizeX: number | null;
+    sizeY: number | null;
+    instructions: string;
+  };
+  colorMap: string[];
 }
 
 const Plateau = ({ roverData, colorMap }: PlateauProps) => {
@@ -14,16 +22,21 @@ const Plateau = ({ roverData, colorMap }: PlateauProps) => {
 
   useEffect(() => {
     if (
-      roverData.id !== undefined &&
-      roverData.x !== undefined &&
-      roverData.y !== undefined &&
-      roverData.direction !== undefined &&
-      roverData.sizeX !== undefined &&
-      roverData.sizeY !== undefined
+      roverData.id !== null &&
+      roverData.x !== null &&
+      roverData.y !== null &&
+      roverData.direction !== null &&
+      roverData.sizeX !== null &&
+      roverData.sizeY !== null
     ) {
       setRovers((prevRovers) => [
         ...prevRovers,
-        { id: roverData.id, x: roverData.x, y: roverData.y, direction: roverData.direction },
+        {
+          id: roverData.id,
+          x: roverData.x!,
+          y: roverData.y!,
+          direction: roverData.direction!,
+        }, 
       ]);
 
       setRovers((prevRovers) => {
@@ -41,13 +54,13 @@ const Plateau = ({ roverData, colorMap }: PlateauProps) => {
     scales: {
       x: {
         min: 0,
-        max: roverData.sizeX,
+        max: roverData.sizeX ?? 0,
         step: 1.0,
         beginAtZero: true,
       },
       y: {
         min: 0,
-        max: roverData.sizeY,
+        max: roverData.sizeY ?? 0,
         step: 1.0,
         beginAtZero: true,
       },
@@ -61,11 +74,11 @@ const Plateau = ({ roverData, colorMap }: PlateauProps) => {
 
   const pointData = {
     datasets: rovers.map((rover, index) => {
-      const color = colorMap[index % colorMap.length]; 
+      const color = colorMap[index % colorMap.length];
       return {
         label: '',
         data: [{ x: rover.x, y: rover.y }],
-        backgroundColor: color, 
+        backgroundColor: color,
         pointStyle: 'triangle',
         radius: 20,
         pointRotation: rover.direction,

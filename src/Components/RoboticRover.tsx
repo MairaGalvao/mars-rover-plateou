@@ -153,7 +153,6 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     } else if (stepForm === 2) {
       setStepForm(1);
     }
-    // Save the current step to local storage
     localStorage.setItem('roverStep', stepForm.toString());
   };
 
