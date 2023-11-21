@@ -1,3 +1,5 @@
+// TODO: remove timeouts 
+
 const puppeteer = require("puppeteer");
 
 (async () => {
@@ -37,17 +39,30 @@ const puppeteer = require("puppeteer");
     await page.click("#btn-rover-init-position");
     await page.waitForTimeout(2000);
 
-
-    // Flow instrucitons user to the Rover
+    // Flow instructions user to the Rover
     await page.waitForSelector("#instructions-user");
     await page.focus("#instructions-user");
 
     await page.keyboard.type("LMLMLMLMM");
+    await page.waitForSelector("#btn-instructions");
     await page.click("#btn-instructions");
 
+    await page.waitForSelector("#final-position-rover");
 
-    //Expected output: Rover's final-position | 1 3 N
+    // Expected output: Rover's final-position | 1 3
+    const expected_result = "1 3 N";
     await page.waitForTimeout(3000);
+
+    const finalPosition = await page.$eval("#final-position-rover", (el) => el.innerText.trim());
+
+    if (!finalPosition.includes(expected_result)) {
+      console.error(`Unexpected final position: ${finalPosition}`);
+    }
+    else{
+        console.log('TEST OK')
+    }
+
+    await page.waitForTimeout(5000);
 
     await page.screenshot({ path: "./screenshot.png", fullPage: true });
   } catch (error) {

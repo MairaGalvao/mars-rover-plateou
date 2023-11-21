@@ -262,7 +262,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       {finalRoverCardinalPointer !== null && (
         <div className="final-direction" id='final-position-rover'>
           <h2>Final Rover's Position</h2>
-          <p>
+          <p id='final-position-rover'>
             Final Position: {finalRoverCoordinateX} {finalRoverCoordinateY}{' '}
             {changeNumberToCardinalPoints(finalRoverCardinalPointer)}
           </p>
