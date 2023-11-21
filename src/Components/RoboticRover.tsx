@@ -215,13 +215,13 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
 
   return (
     <div className="user-data">
-      <h1 className="main-title">Mars Rover </h1>
+      <h1 className="main-title">Mars Rover</h1>
       {stepForm === 0 && (
         <form id="x-y-inputs" className="form-user" onSubmit={handleButtonClick}>
-          <label>
+          <label className='label'>
             Enter X Dimension of Plateau: <input type="text" value={sizeXPlateauUser} onChange={handleSizeXInput} required />
-          </label>
-          <label>
+          </label >
+          <label className='label'>
             Enter Y Dimension of Plateau: <input type="text" value={sizeYPlateauUser} onChange={handleSizeYInput} required />
           </label>
           <button className="btn-user" type="submit">
@@ -232,13 +232,13 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
 
       {stepForm === 1 && (
         <form className="form-user" id="rover-position" onSubmit={handleButtonClick}>
-          <label>
+          <label className='label'>
             Enter X Coordinate for Rover: <input type="text" value={initXCoordinateUser} onChange={handleXInput} required />
           </label>
-          <label>
+          <label className='label'>
             Enter Y Coordinate for Rover: <input type="text" value={initYCoordinateUser} onChange={handleYInput} required />
           </label>
-          <label>
+          <label className='label'>
             Enter Rover Direction on Landing: <input type="text" value={initPositionUser} onChange={handleDirectionInput} required />
           </label>
           <button className="btn-user" type="submit">
@@ -249,7 +249,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
 
       {stepForm === 2 && (
         <form className="form-user" id="instructions-input" onSubmit={handleInstructionsSubmit}>
-          <label>
+          <label className='label'>
             Enter Movement Instructions (LRM string):{' '}
             <input type="text" value={instructionsUser} onChange={handleInstructionsInput} required />
           </label>
