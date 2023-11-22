@@ -213,6 +213,10 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     localStorage.setItem('roverStep', '1');
   };
 
+
+  
+
+
   return (
     <div className="user-data">
       <h1 className="main-title">Mars Rover</h1>
@@ -241,7 +245,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
           <label className='label'>
             Enter Rover Direction on Landing: <input  id='init-point' type="text" value={initPositionUser} onChange={handleDirectionInput} required />
           </label>
-          <button className="btn-user" id='btn-rover-init-position' type="submit">
+          <button className="btn-user" id='btn-rover-init-position' type="submit"  >
             Next
           </button>
         </form>
@@ -262,7 +266,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
       {finalRoverCardinalPointer !== null && (
         <div className="final-direction" id='final-position-rover'>
           <h2>Final Rover's Position</h2>
-          <p id='final-position-rover'>
+          <p >
             Final Position: {finalRoverCoordinateX} {finalRoverCoordinateY}{' '}
             {changeNumberToCardinalPoints(finalRoverCardinalPointer)}
           </p>
