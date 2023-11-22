@@ -112,6 +112,9 @@ Follow these steps to run the Mars Rover application on your local machine:
    12. The user must reset all the information in case to add new rovers
    13. The user must verify to not add Rover's in the exact same location
    14. The user must verify not to add more rover's than the actual amount of points
+   15. Unit test - or e2e test to see if all final results are being displayed 
+   16. Inputs should not be separated. 
+   17. Display all the final positions 
 
 
    **EXTRAS**
