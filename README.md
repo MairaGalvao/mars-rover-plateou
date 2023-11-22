@@ -35,6 +35,11 @@ Follow these steps to run the Mars Rover application on your local machine:
     instructions for each rover.
 
     4. **Run end-to-end Puppeteer Tests:**
+
+   The end-to-end test (TestRoboticRover.js) automates user interactions with the Mars Rover 
+   application using Puppeteer.It sets plateau size, rover's initial position, and instructions, 
+   then verifies the final position displayed on the page, ensuring the UI functions correctly in 
+   response to user input.
     
     Run end-to-end test:
     ```
@@ -42,6 +47,12 @@ Follow these steps to run the Mars Rover application on your local machine:
     ```
 
     5. **Run Unit Puppeteer Tests:**
+
+   Unit Test (TestRoboticRoverFunct.js):
+   The unit test (TestRoboticRoverFunct.js) focuses on specific functionality within the 
+   application, assessing the behavior of UI elements after certain actions. It interacts with 
+   the user interface by inputting values, clicking buttons, and evaluating the resulting state, 
+   ensuring the expected behavior is reflected.
     
     Run Unit test:
     ```
@@ -68,4 +79,40 @@ Follow these steps to run the Mars Rover application on your local machine:
     Puppeteer is used for end-to-end and unit testing.
 
 
+   **remove below part or not??? 
+
+   **Edge cases taken care**
+   src/components/Plateau.tsx
+
+   **Plateau Size**
+   1. The application checks if the X and Y dimension are not filled. 
+   2. The application checks if the X and Y values are negative.
+   3. The application checks if the X and Y values are numerical.
+
+   **Rover's initial coordinates** 
+   4. The application checks if the X and Y dimension and landing are not filled. 
+   5. The application verifies that the X and Y coordinates are greater than or equal to the 
+   specified Plateau dimensions.
+   6. The application verifies that the X and Y coordinates are numerical.
+   7. The application verifies that the landing direction are N, E, S or W.
+
+   **Rover's instructions** 
+   8. The application checks the instructions are not filled. 
+   9. The application verifies that the instructions are L, R or M.
+
+   **Form**
+   10. The application moves back to add another Rover's instead of the initial size form - 
+   assuming the user wants to add another Rover
+
+
+   **Edge cases NOT taken care**
+   
+   **Form**
+   11. The user must refresh the page in case she/he wants to add another size of Plateau
+   12. The user must reset all the information in case to add new rovers
+   13. The user must verify to not add Rover's in the exact same location
+   14. The user must verify not to add more rover's than the actual amount of points
+
+
+   **EXTRAS**
 

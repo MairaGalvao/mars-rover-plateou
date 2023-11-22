@@ -84,23 +84,46 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
   };
 
   const handleXInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setInitXCoordinateUser(event.target.value);
+    const inputValue = event.target.value;
 
-    if (parseFloat(event.target.value) > parseFloat(sizeXPlateauUser)) {
-      alert('Your X coordinates initial value is bigger than the actual size of the plateau');
+    if (!/^\d+$/.test(inputValue)) {
+      alert('Please enter a numeric value for X Coordinate.');
+      return;
     }
+
+    if (parseFloat(inputValue) > parseFloat(sizeXPlateauUser)) {
+      alert('Your X coordinates initial value is bigger than the actual size of the plateau');
+      return;
+    }
+
+    setInitXCoordinateUser(inputValue);
   };
 
   const handleYInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setInitYCoordinateUser(event.target.value);
+    const inputValue = event.target.value;
 
-    if (parseFloat(event.target.value) > parseFloat(sizeYPlateauUser)) {
-      alert('Your Y coordinates initial value is bigger than the actual size of the plateau');
+    if (!/^\d+$/.test(inputValue)) {
+      alert('Please enter a numeric value for Y Coordinate.');
+      return;
     }
+
+    if (parseFloat(inputValue) > parseFloat(sizeYPlateauUser)) {
+      alert('Your Y coordinates initial value is bigger than the actual size of the plateau');
+      return;
+    }
+
+    setInitYCoordinateUser(inputValue);
   };
 
   const handleSizeXInput = (event: ChangeEvent<HTMLInputElement>) => {
-    setSizeXPlateauUser(event.target.value);
+    const inputValue = event.target.value;
+
+    if (!/^\d+$/.test(inputValue)) {
+      alert('Please enter a numeric value for X Dimension of Plateau.');
+      return;
+    }
+
+    setSizeXPlateauUser(inputValue);
   };
 
   const handleSizeYInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -213,10 +236,6 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
     localStorage.setItem('roverStep', '1');
   };
 
-
-  
-
-
   return (
     <div className="user-data">
       <h1 className="main-title">Mars Rover</h1>
@@ -224,7 +243,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
         <form id="x-y-inputs" className="form-user" onSubmit={handleButtonClick}>
           <label className='label'>
             Enter X Dimension of Plateau: <input type="text" id='x-plateau-size' value={sizeXPlateauUser} onChange={handleSizeXInput} required />
-          </label >
+          </label>
           <label className='label'>
             Enter Y Dimension of Plateau: <input type="text" id='y-plateau-size' value={sizeYPlateauUser} onChange={handleSizeYInput} required />
           </label>
@@ -243,7 +262,7 @@ const RoboticRover = ({ onSendData }: RoboticRoverProps) => {
             Enter Y Coordinate for Rover: <input id='y-init-coord' type="text" value={initYCoordinateUser} onChange={handleYInput} required />
           </label>
           <label className='label'>
-            Enter Rover Direction on Landing: <input  id='init-point' type="text" value={initPositionUser} onChange={handleDirectionInput} required />
+            Enter Rover Direction on Landing: <input id='init-point' type="text" value={initPositionUser} onChange={handleDirectionInput} required />
           </label>
           <button className="btn-user" id='btn-rover-init-position' type="submit"  >
             Next
