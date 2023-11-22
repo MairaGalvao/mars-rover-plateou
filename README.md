@@ -1,47 +1,71 @@
-# Getting Started with Create React App
+# Mars Rover Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project provides an interactive simulation of robotic rovers on Mars. Users have the flexibility to dynamically choose the size of the rectangular plateau, define the initial X and Y coordinates for the rover's landing position, and input string instructions. The application visually represents the rover's initial and final positions on a graph, showcasing the trajectory based on the provided instructions.
 
-## Available Scripts
+The user can interactively select the size of the rectangular plateau, providing flexibility in the simulation.
+Initial X and Y coordinates and cardinal points for the rover's landing position can be chosen interactively, allowing for a customized starting point.
+String instructions input by the user are graphically represented, displaying both the initial and final positions of the rover.
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+Follow these steps to run the Mars Rover application on your local machine:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. **Clone the Repository:**
+   ```bash
+   git clone <https://github.com/MairaGalvao/mars-rover-plateou
+   cd client
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. **Install dependencies:**
+    ```
+    npm install
+    ```
 
-### `npm test`
+    Run app:
+    ```
+    npm start
+    ```
+    This will start the development server, and you can access the application in your browser   
+    at  http://localhost:3000.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    3. **Interact with the Application:**
 
-### `npm run build`
+    Open the application in your browser and follow the on-screen instructions to input plateau  
+    size and rover data.
+    The application allows you to define the size of the plateau and the landing position and 
+    instructions for each rover.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    4. **Run end-to-end Puppeteer Tests:**
+    
+    Run end-to-end test:
+    ```
+    node ./src/end-to-end-tests/TestRoboticRover.js; 
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    5. **Run Unit Puppeteer Tests:**
+    
+    Run Unit test:
+    ```
+    node ./src/unit-tests/TestRoboticRoverFunct.js; 
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    **Project Structure**
+    src/
+    App.js: Main application component.
+    src/
+    components/
+    RoboticRover.js: Component for user input.
+    Plateau.js: Component for displaying rovers on the plateau.
+    end-to-end-tests/
+    TestRoboticRover.js: End-to-end Puppeteer tests.
 
-### `npm run eject`
+    unit-tests/
+    TestRoboticRoverFunct.js: Unit Puppeteer tests.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    **Additional Notes**
+    The application uses Javascript-React for the user interface.
+    HTML and CSS were utilized for simple and structured styling of the user interface.
+    Chart.js is employed for visualizing rover positions on the plateau.
+    Puppeteer is used for end-to-end and unit testing.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-# mars-rover-plateou
