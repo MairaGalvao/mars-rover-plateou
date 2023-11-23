@@ -7,20 +7,17 @@ interface Position {
     cardinal: string
 }
 
-interface InitialRovers {
-    position: Position
-    instructions: string
-}
 
 function Main() {
 
+    const [startingRovers, setStartingRovers] = useState<any[]>([]);        // list of Rover objects and thier initial values
+    const [finalRovers, setFinalRovers] = useState<Position[]>([]);
+
+    const [didRunFinish, setDidRunFinish] = useState(false);
+
+    // temp input that is overriden with new input
     const [position, setPosition] = useState('');
     const [instructions, setInstructions] = useState('');
-    const [finalRovers, setFinalRovers] = useState<Position[]>([]);
-    const [roversCount, setRoversCount] = useState(1);
-    const [startingRovers, setStartingRovers] = useState<InitialRovers[]>([]);
-
-
 
 
     function addRover() {
@@ -29,81 +26,82 @@ function Main() {
         const inputY = Number(position.split(' ')[1])
         const inputCardinal = position.split(' ')[2]
 
-        setStartingRovers(startingRovers => [...startingRovers, {
-            position:
-            {
-                roverX: inputX,
-                roverY: inputY,
-                cardinal: inputCardinal
-            },
-            instructions: instructions
-        }])
-
-
         const roverProps = {
-            x: position.split(' ')[0],
-            y: position.split(' ')[1],
-            initialCardinal: position.split(' ')[2],
+            x: inputX,
+            y: inputY,
+            initialCardinal: inputCardinal,
             intrusctions: instructions,
         }
 
         const rover = new (Rover as any)(roverProps)
-        rover.run()
 
 
-        console.log(rover.x, rover.y, rover.cardinal)
-        const roverPosition = { roverX: rover.x, roverY: rover.y, cardinal: rover.cardinal }
-        setFinalRovers(finalRovers => [...finalRovers, roverPosition]);
-        setRoversCount(roversCount + 1)
 
-        // create an object with position and instruction 
+        setStartingRovers(startingRovers => [...startingRovers, { rover: rover, initialValue: { roverX: rover.x, roverY: rover.y, cardinal: rover.cardinal } }])
+        setPosition('')
+        setInstructions('')
 
 
     }
 
-    console.log(startingRovers)
 
-    function startRovers() {
-        //  
+    function runRovers() {
+        startingRovers.forEach(function (startRover) {
+            startRover.rover.run()
+            setFinalRovers(finalRovers => [...finalRovers, { roverX: startRover.rover.x, roverY: startRover.rover.y, cardinal: startRover.rover.cardinal }]);
+        })
+        setDidRunFinish(true)
     }
+
 
     return (
         <>
-            {Array.from({ length: roversCount }).map((_, index) => (
-                <div key={index}>
-                    Landing Position:{' '}
-                    <input
-                        type="text"
-                        value={position}
-                        onChange={(event) => {
-                            setPosition(event.target.value);
-                        }}
-                        required
-                    />
-                    Instruction:{' '}
-                    <input
-                        type="text"
-                        value={instructions}
-                        onChange={(event) => {
-                            setInstructions(event.target.value);
-                        }}
-                        required
-                    />
 
-                </div>
-            ))}
+            <div >
+                Landing Position:{' '}
+                <input
+                    type="text"
+                    value={position}
+                    onChange={(event) => {
+                        setPosition(event.target.value);
+                    }}
+                    required
+                />
+                Instruction:{' '}
+                <input
+                    type="text"
+                    value={instructions}
+                    onChange={(event) => {
+                        setInstructions(event.target.value);
+                    }}
+                    required
+                />
+
+            </div>
+
 
             <button className="btn-user" onClick={addRover}>
                 Add
             </button>
-            {finalRovers.map((position, index) => {
+
+
+            {startingRovers.map((initPosition, index) => {
                 return <div key={index} >
-                    <h1>{position.roverX} {position.roverY} {position.cardinal} </h1>
+                    <p>Landing Position: {initPosition.initialValue.roverX} {initPosition.initialValue.roverY} {initPosition.initialValue.cardinal}</p>
+                    <p>Instruction: {initPosition.rover.movingInstructions}</p>
+                    {didRunFinish && <p><b>Final position:</b> {finalRovers[index].roverX} {finalRovers[index].roverY} {finalRovers[index].cardinal}</p>}
                 </div>
             })}
 
+            {/* {finalRovers.map((position, index) => {
+                return <div key={index} >
+
+                    <h1> Final position: {position.roverX} {position.roverY} {position.cardinal} </h1>
+                </div>
+            })} */}
+
             {/* Start the Plateau */}
-            <button onClick={startRovers}> Start</button>
+            <button onClick={runRovers} disabled={startingRovers.length === 0}>Run Rovers</button>
 
 
         </>

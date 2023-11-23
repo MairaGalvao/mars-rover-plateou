@@ -9,8 +9,8 @@ interface RoverProps{
 
 
 function Rover (this: any, roverProps :RoverProps )  {
-    this.x = roverProps.x
-    this.y = roverProps.y
+    this.x = Number(roverProps.x)
+    this.y = Number(roverProps.y)
     this.cardinal = roverProps.initialCardinal
     this.movingInstructions = roverProps.intrusctions
 
@@ -66,6 +66,7 @@ function Rover (this: any, roverProps :RoverProps )  {
     }
 
     this.run = () => {
+        console.log("running rover ", this.x, this.y, this.cardinal)
         for (let i=0; i < this.movingInstructions.length; i ++){
             if (this.movingInstructions[i] === 'L' ){
                 this.turn('L')   
