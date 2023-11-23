@@ -84,17 +84,16 @@ const clickElement = async (page, selector) => {
   try {
     await page.goto("http://localhost:3000/");
 
-    await typeInput(page, "#plateau-size", "10 10");
+    await typeInput(page, "#plateau-size", "1 1");
 
     await clickElement(page, "#btn-size-plateau");
 
     await typeInput(page, "#landing-rover", "3 3 E");
     await typeInput(page, "#instructions", "MRRMMRMRRM");
 
-    await clickElement(page, "#add-rover");
 
     // is button disabled?
-    const is_disabled = await page.evaluate(() => document.querySelector('#btn-size-plateau[disabled]') !== null);
+    const is_disabled = await page.evaluate(() => document.querySelector('#add-rover[disabled]') !== null);
     
     // expect button to be disabled
     assert.equal(is_disabled, true)

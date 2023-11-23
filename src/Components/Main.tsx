@@ -165,7 +165,7 @@ function Main() {
                     required
 
                 />
-                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} > Size Plateau</button>
+                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} > Set Plateau</button>
 
          
 

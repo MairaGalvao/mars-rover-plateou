@@ -86,9 +86,9 @@ Follow these steps to run the Mars Rover application on your local machine:
    **Plateau & Rover inputs** 
 
    **Plateau Size**
-   1. In case the X or Y dimension are not filled - "Add" button is disabled.
-   2. In case the X or Y values are negative - "Add" button is disabled.
-   3. In case the X or Y values are not numerical - "Add" button is disabled.
+   1. In case the X or Y dimension are not filled - "Set Plateau" button is disabled.
+   2. In case the X or Y values are negative - "Set Plateau" button is disabled.
+   3. In case the X or Y values are not numerical - "Set Plateau" button is disabled.
 
    **Rover's initial coordinates** 
    4. In case the X or Y dimension and cardinal are not filled - "Add" button is disabled. 
