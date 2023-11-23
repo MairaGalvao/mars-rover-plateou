@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import './App.css';
 import Plateau from './Components/Plateau';
-import RoboticRover from './Components/RoboticRover';
 import Main from './Components/Main';
 
 function App() {

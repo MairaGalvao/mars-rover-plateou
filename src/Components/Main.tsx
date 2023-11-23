@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import Rover from './Rover';
+import PlateauMars  from './PlateauMars';
 
 interface Position {
     roverX: number,
@@ -10,14 +11,17 @@ interface Position {
 
 function Main() {
 
-    const [startingRovers, setStartingRovers] = useState<any[]>([]);        // list of Rover objects and thier initial values
+    const [startingRovers, setStartingRovers] = useState<any[]>([]);      
     const [finalRovers, setFinalRovers] = useState<Position[]>([]);
 
     const [didRunFinish, setDidRunFinish] = useState(false);
 
-    // temp input that is overriden with new input
     const [position, setPosition] = useState('');
     const [instructions, setInstructions] = useState('');
+
+
+    const [plateauSize, setPlateauSize] = useState('');
+  
 
 
     function addRover() {
@@ -44,6 +48,23 @@ function Main() {
 
     }
 
+function choosePlateauSize(){
+
+    const plateauX = Number(plateauSize.split(' ')[0])
+    const plateauY = Number(plateauSize.split(' ')[1])
+
+
+    const plateauProps = {
+        x: plateauX,
+        y: plateauY,
+    }
+
+    const plateau = new (PlateauMars as any)(plateauProps)
+    setPlateauSize('')
+
+}
+
+
 
     function runRovers() {
         startingRovers.forEach(function (startRover) {
@@ -56,6 +77,21 @@ function Main() {
 
     return (
         <>
+
+<div >
+                Plateau size:{' '}
+                <input   type="text"
+                    value={plateauSize}
+                    onChange={(event) => {
+                        setPlateauSize(event.target.value);
+                    }}
+                    required
+              
+                />
+              <button onClick={choosePlateauSize}> Size Plateau</button>
+
+            </div>
+
 
             <div >
                 Landing Position:{' '}
@@ -93,15 +129,13 @@ function Main() {
                 </div>
             })}
 
-            {/* {finalRovers.map((position, index) => {
-                return <div key={index} >
-
-                    <h1> Final position: {position.roverX} {position.roverY} {position.cardinal} </h1>
-                </div>
-            })} */}
-
             {/* Start the Plateau */}
             <button onClick={runRovers} disabled={startingRovers.length === 0}>Run Rovers</button>
+
+
+
+
+
 
 
         </>
