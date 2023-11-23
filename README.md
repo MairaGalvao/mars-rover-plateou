@@ -12,44 +12,44 @@ Follow these steps to run the Mars Rover application on your local machine:
 
 ### Clone the Repository:
    ```bash
-   git clone <https://github.com/MairaGalvao/mars-rover-plateou
+   git clone https://github.com/MairaGalvao/mars-rover-plateou
    ```
 
 ### Install dependencies:
-    ```
+    ```bash
     npm install
     ```
 
-    Run app:
-    ```
+### Run app:
+    ```bash
     npm start
     ```
-    This will start the development server, and you can access the application in your browser   
-    at  http://localhost:3000.
+This will start the development server, and you can access the application in your browser at  http://localhost:3000.
 
-    ## Product decision: 
-    ***What happens if the Rover exits the Plateau?***
 
-     If in any move of the Rover it exits the Plateau, the Rover's run stops. 
+## Product decision: 
+**What happens if the Rover exits the Plateau?**
+
+If in any move of the Rover it exits the Plateau, the Rover's run stops. 
 
 ## Interact with the Application: 
 
-    Open the application in your browser and follow the on-screen instructions to input plateau  
-    size and rover data.
-    The application allows you to define the size of the plateau and the landing position and 
-    instructions for each rover.
+Open the application in your browser and follow the on-screen instructions to input plateau  
+size and rover data.
+The application allows you to define the size of the plateau and the landing position and 
+instructions for each rover.
 
 ## Run end-to-end Puppeteer Tests:
 
-   The end-to-end test (TestRoboticRover.js) automates user interactions with the Mars Rover 
-   application using Puppeteer.It sets plateau size, rover's initial position, and instructions, 
-   then verifies the final position displayed on the page, ensuring the UI functions correctly in 
-   response to user input.
+The end-to-end test (TestRoboticRover.js) automates user interactions with the Mars Rover 
+application using Puppeteer.It sets plateau size, rover's initial position, and instructions, 
+then verifies the final position displayed on the page, ensuring the UI functions correctly in 
+response to user input.
     
-    Run end-to-end test:
-    ```
+Run end-to-end test:
+  ```bash
     node ./src/testRoboticRover.js; 
-    ```
+  ```
 
    ## Usage Example 
    ### Example 1
