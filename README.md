@@ -10,12 +10,12 @@ String instructions input by the user are graphically represented, displaying bo
 
 Follow these steps to run the Mars Rover application on your local machine:
 
-1. **Clone the Repository:**
+1. **Clone the Repository:
    ```bash
    git clone <https://github.com/MairaGalvao/mars-rover-plateou
    cd client
 
-2. **Install dependencies:**
+2. ## Install dependencies:
     ```
     npm install
     ```
@@ -27,19 +27,19 @@ Follow these steps to run the Mars Rover application on your local machine:
     This will start the development server, and you can access the application in your browser   
     at  http://localhost:3000.
 
-    ***Product decision*** 
+    ## Product decision: 
     ***What happens if the Rover exits the Plateau?***
 
      If in any move of the Rover it exits the Plateau, the Rover's run stops. 
 
-    3. **Interact with the Application:**
+## Interact with the Application: 
 
     Open the application in your browser and follow the on-screen instructions to input plateau  
     size and rover data.
     The application allows you to define the size of the plateau and the landing position and 
     instructions for each rover.
 
-    4. **Run end-to-end Puppeteer Tests:**
+## Run end-to-end Puppeteer Tests:
 
    The end-to-end test (TestRoboticRover.js) automates user interactions with the Mars Rover 
    application using Puppeteer.It sets plateau size, rover's initial position, and instructions, 
@@ -51,8 +51,8 @@ Follow these steps to run the Mars Rover application on your local machine:
     node ./src/testRoboticRover.js; 
     ```
 
-   **Usage Example**
-   ***Example 1***
+   ## Usage Example 
+   ### Example 1
    INPUT:
    - Plateau size: 20 20
    - Landing Pos: 1 2 N 
@@ -60,7 +60,7 @@ Follow these steps to run the Mars Rover application on your local machine:
    OUTPUT:
    - Final Position: 1 3 N
 
-   ***Example 2***   
+   ### Example 2   
    INPUT:
    - Plateau size: 20 20
    - Landing Position: 3 3 E 
@@ -68,7 +68,7 @@ Follow these steps to run the Mars Rover application on your local machine:
    OUTPUT:
    - Final Position: 2 3 S
 
-    **Project Structure**
+    ## Project Structure
       ├── Main
       │   ├── Rover  | Responsible for operating the Rovers object according to the instructions
       │   ├── Plateau | Responsible for displaying the Plateau and Rover Data dynamically  
@@ -76,29 +76,27 @@ Follow these steps to run the Mars Rover application on your local machine:
 
 
 
-    **Additional Notes**
+    ## Technologies stack
     The application uses Javascript-React for the user interface.
     HTML and CSS were utilized for simple and structured styling of the user interface.
     Chart.js is employed for visualizing rover positions on the plateau graphcally.
     Puppeteer is used for end-to-end testing.
 
 
-   **Edge cases**
+   ## Edge cases
 
-   **Plateau & Rover inputs** 
-
-   **Plateau Size**
+   ### Plateau Size 
    1. In case the X or Y dimension are not filled - "Set Plateau" button is disabled.
    2. In case the X or Y values are negative - "Set Plateau" button is disabled.
    3. In case the X or Y values are not numerical - "Set Plateau" button is disabled.
 
-   **Rover's initial coordinates** 
+   ### Rover's initial coordinates
    4. In case the X or Y dimension and cardinal are not filled - "Add" button is disabled. 
    5. In case the X or Y coordinates are greater than the Plateau dimensions - "Add" button is disabled.
    6. In case the X or Y coordinates are not numerical - "Add" button is disabled.
    7. In case the landing direction is not N, E, S or W - "Add" button is disabled.
 
-   **Rover's instructions** 
+   ### Rover's instructions
    8. In case the instructions are not filled - "Add" button shuold be disabled. TODO
    9. In case the instructions are not on of L, R or M - "Add" button shuold be disabled. TODO
 
