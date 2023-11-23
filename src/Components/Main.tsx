@@ -76,7 +76,6 @@ function Main() {
     }
 
 
-
     function isCoordinateInvalid(inputString: string) {
         const xSize = Number(inputString.split(' ')[0])
         const ySize = Number(inputString.split(' ')[1])
@@ -130,11 +129,11 @@ function Main() {
 
     return (
         <>
-
+<div className='main-app'>
 <h1 className='main-title'>Plateau Mars</h1>
-<div id='plateau-rover-form'>
+<div id='plateau-rover-form' className='plateau-rover-form'>
 
-            <div className='plateau-size'>
+            <div >
                 <label className='label'>Plateau size:{' '}</label>
 
 
@@ -147,6 +146,7 @@ function Main() {
                     required
 
                 />
+                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} > Size Plateau</button>
 
          
 
@@ -155,6 +155,7 @@ function Main() {
                 <label className='label'> Landing Pos:{' '}</label>
                 <input
                     type="text"
+                    id='landing-rover'
                     value={position}
                     onChange={(event) => {
                         setPosition(event.target.value);
@@ -164,6 +165,7 @@ function Main() {
                 </div>
                 <label className='label'>Instruction:{' '}</label>
                 <input
+
                     id='instructions'
                     type="text"
                     value={instructions}
@@ -198,6 +200,7 @@ function Main() {
             <button className= 'button' onClick={runRovers} disabled={startingRovers.length === 0} id='run-rover'>Run Rovers</button>
             <PlateauMars x={Number(plateauSize.split(' ')[0])} y={Number(plateauSize.split(' ')[1])} initialCoordinates={startingRovers} finalCoordinates={finalRovers} />
 
+            </div>
         </>
     )
 
