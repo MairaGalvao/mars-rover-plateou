@@ -116,6 +116,8 @@ Follow these steps to run the Mars Rover application on your local machine:
    16. Inputs should not be separated. 
    17. Display all the final positions
    18. multiple rovers instead of one 
+   19. add screenshots of test in the right directory
+   20. make sure all strings are capitalletter
 
    **EXTRAS**
 

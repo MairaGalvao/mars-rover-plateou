@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import Rover from './Rover';
-import PlateauMars  from './PlateauMars';
+import PlateauMars from './PlateauMars';
 
 interface Position {
     roverX: number,
@@ -11,7 +11,7 @@ interface Position {
 
 function Main() {
 
-    const [startingRovers, setStartingRovers] = useState<any[]>([]);      
+    const [startingRovers, setStartingRovers] = useState<any[]>([]);
     const [finalRovers, setFinalRovers] = useState<Position[]>([]);
 
     const [didRunFinish, setDidRunFinish] = useState(false);
@@ -49,21 +49,21 @@ function Main() {
 
     }
 
-function choosePlateauSize(){
+    function choosePlateauSize() {
 
-    const plateauX = Number(plateauSize.split(' ')[0])
-    const plateauY = Number(plateauSize.split(' ')[1])
+        const plateauX = Number(plateauSize.split(' ')[0])
+        const plateauY = Number(plateauSize.split(' ')[1])
 
 
-    const plateauProps = {
-        x: plateauX,
-        y: plateauY,
+        const plateauProps = {
+            x: plateauX,
+            y: plateauY,
+        }
+
+        const plateau = new (PlateauMars as any)(plateauProps)
+        setPlateauSize('')
+
     }
-
-    const plateau = new (PlateauMars as any)(plateauProps)
-    setPlateauSize('')
-
-}
 
 
 
@@ -75,63 +75,64 @@ function choosePlateauSize(){
         setDidRunFinish(true)
     }
 
-function isCoordinateInvalid(inputString:string){
-    const xSize = Number(inputString.split(' ')[0])
-    const ySize = Number(inputString.split(' ')[1])
+    function isCoordinateInvalid(inputString: string) {
+        const xSize = Number(inputString.split(' ')[0])
+        const ySize = Number(inputString.split(' ')[1])
 
-    if ((xSize <= 0 ) || (ySize <= 0)){
-        return true
-    }
-    if (Number.isNaN(xSize) || Number.isNaN(ySize) ){
-        return true
-    }
-    return false
-       
-}
-function isPlateauInputInvalid(){
-    return isCoordinateInvalid(plateauSize)
-}
-
-function isRoverInputInvalid(){
-    const coordinatesInvalid = isCoordinateInvalid(position)
-    const cardinalLetters  = ['N', "E", "S", "W"]
-    
-    let didFindMatch = false
-    for (let i = 0; i < cardinalLetters.length; i++ ){
-      if(position.split(' ')[2] === cardinalLetters[i]){
-        didFindMatch = true
-      }
+        if ((xSize <= 0) || (ySize <= 0)) {
+            return true
+        }
+        if (Number.isNaN(xSize) || Number.isNaN(ySize)) {
+            return true
+        }
+        return false
 
     }
-    const cardinalIsBad = didFindMatch === false 
-    if (coordinatesInvalid || cardinalIsBad){
-        return true
+    function isPlateauInputInvalid() {
+        return isCoordinateInvalid(plateauSize)
     }
-    return false
-}
-    
+
+    function isRoverInputInvalid() {
+        const coordinatesInvalid = isCoordinateInvalid(position)
+        const cardinalLetters = ['N', "E", "S", "W"]
+
+        let didFindMatch = false
+        for (let i = 0; i < cardinalLetters.length; i++) {
+            if (position.split(' ')[2] === cardinalLetters[i]) {
+                didFindMatch = true
+            }
+
+        }
+        const cardinalIsBad = didFindMatch === false
+        if (coordinatesInvalid || cardinalIsBad) {
+            return true
+        }
+        return false
+    }
+
 
 
 
     return (
         <>
 
-<div >
+            <div >
                 Plateau size:{' '}
-  
-              
-  
-                <input   type="text"
+
+
+
+                <input type="text"
+                    id='plateau-size'
                     value={plateauSize}
                     onChange={(event) => {
                         setPlateauSize(event.target.value);
                     }}
                     required
-              
+
                 />
 
 
-              <button disabled={isPlateauInputInvalid()} onClick={choosePlateauSize}> Size Plateau</button>
+                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} onClick={choosePlateauSize}> Size Plateau</button>
 
             </div>
 
@@ -139,6 +140,7 @@ function isRoverInputInvalid(){
             <div >
                 Landing Position:{' '}
                 <input
+                    id='landing-rover'
                     type="text"
                     value={position}
                     onChange={(event) => {
@@ -148,6 +150,7 @@ function isRoverInputInvalid(){
                 />
                 Instruction:{' '}
                 <input
+                    id='instructions'
                     type="text"
                     value={instructions}
                     onChange={(event) => {
@@ -159,7 +162,7 @@ function isRoverInputInvalid(){
             </div>
 
 
-            <button className="btn-user" disabled={isRoverInputInvalid()} onClick={addRover}>
+            <button id='add-rover' className="btn-user" disabled={isRoverInputInvalid()} onClick={addRover}>
                 Add
             </button>
 
@@ -168,12 +171,18 @@ function isRoverInputInvalid(){
                 return <div key={index} >
                     <p>Landing Position: {initPosition.initialValue.roverX} {initPosition.initialValue.roverY} {initPosition.initialValue.cardinal}</p>
                     <p>Instruction: {initPosition.rover.movingInstructions}</p>
-                    {didRunFinish && <p><b>Final position:</b> {finalRovers[index].roverX} {finalRovers[index].roverY} {finalRovers[index].cardinal}</p>}
+
+                    <div>
+                        {didRunFinish && <p><b>Final position:</b>
+                            <div id='final-position-rover'>{finalRovers[index].roverX} {finalRovers[index].roverY} {finalRovers[index].cardinal}</div>
+                        </p>}
+
+                    </div>
                 </div>
             })}
 
             {/* Start the Plateau */}
-            <button onClick={runRovers} disabled={startingRovers.length === 0}>Run Rovers</button>
+            <button onClick={runRovers} disabled={startingRovers.length === 0} id='run-rover'>Run Rovers</button>
 
 
 
