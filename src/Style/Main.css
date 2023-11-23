@@ -1,0 +1,18 @@
+.plateau-rover-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.label{
+    font-family: monospace;
+}
+
+.button{
+    width: 100px;
+    margin-top: 20px;
+    cursor: pointer;}
+
+    button:disabled {
+        cursor: not-allowed;
+        pointer-events: all !important;
+      }

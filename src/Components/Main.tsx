@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Rover from './Rover';
 import PlateauMars from './PlateauMars';
+import '../Style/Main.css';
+
 
 interface Position {
     roverX: number,
@@ -129,9 +131,11 @@ function Main() {
     return (
         <>
 
-            <div >
-                Plateau size:{' '}
+<h1 className='main-title'>Plateau Mars</h1>
+<div id='plateau-rover-form'>
 
+            <div className='plateau-size'>
+                <label className='label'>Plateau size:{' '}</label>
 
 
                 <input type="text"
@@ -144,13 +148,12 @@ function Main() {
 
                 />
 
-            </div>
+         
 
 
-            <div >
-                Landing Position:{' '}
+            <div className='position'>
+                <label className='label'> Landing Pos:{' '}</label>
                 <input
-                    id='landing-rover'
                     type="text"
                     value={position}
                     onChange={(event) => {
@@ -158,7 +161,8 @@ function Main() {
                     }}
                     required
                 />
-                Instruction:{' '}
+                </div>
+                <label className='label'>Instruction:{' '}</label>
                 <input
                     id='instructions'
                     type="text"
@@ -171,8 +175,8 @@ function Main() {
 
             </div>
 
-
-            <button id='add-rover' className="btn-user" disabled={isRoverInputInvalid()} onClick={addRover}>
+            </div>
+            <button id='add-rover' className="button" disabled={isRoverInputInvalid()} onClick={addRover}>
                 Add
             </button>
 
@@ -191,7 +195,7 @@ function Main() {
                 </div>
             })}
 
-            <button onClick={runRovers} disabled={startingRovers.length === 0} id='run-rover'>Run Rovers</button>
+            <button className= 'button' onClick={runRovers} disabled={startingRovers.length === 0} id='run-rover'>Run Rovers</button>
             <PlateauMars x={Number(plateauSize.split(' ')[0])} y={Number(plateauSize.split(' ')[1])} initialCoordinates={startingRovers} finalCoordinates={finalRovers} />
 
         </>
