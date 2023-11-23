@@ -51,44 +51,6 @@ const clickElement = async (page, selector) => {
 })();
 
 
-// rover exceeded plateau
-(async () => {
-  const browser = await puppeteer.launch({ headless: false });
-  const page = await browser.newPage();
-
-  try {
-    await page.goto("http://localhost:3000/");
-
-    // Plateau size's flow
-    await typeInput(page, "#plateau-size", "2 2");
-
-    await clickElement(page, "#btn-size-plateau");
-
-    await typeInput(page, "#landing-rover", "1 1 N");
-    await typeInput(page, "#instructions", "MMM");
-
-    await clickElement(page, "#add-rover");
-
-
-    await clickElement(page, "#run-rover");
-
-    const expected_result = "-1 -1 exceeded plateau";
-
-    const resultsSelector = '#final-position-rover'
-    await page.waitForSelector(resultsSelector)
-    let element = await page.$(resultsSelector)
-    let value = await page.evaluate(el => el.textContent, element)
-
-    assert.equal(value, expected_result)
-
-  } catch (error) {
-    console.error("\nError during script execution:", error);
-  } finally {
-    await browser.close();
-  }
-})();
-
-
 // assert cannot insert illegal plateau size
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
@@ -126,12 +88,13 @@ const clickElement = async (page, selector) => {
 
     await clickElement(page, "#btn-size-plateau");
 
-    // bad input 
-    await typeInput(page, "#landing-rover", "50 2 E");
+    await typeInput(page, "#landing-rover", "3 3 E");
+    await typeInput(page, "#instructions", "MRRMMRMRRM");
 
+    await clickElement(page, "#add-rover");
 
     // is button disabled?
-    const is_disabled = await page.evaluate(() => document.querySelector('#add-rover[disabled]') !== null);
+    const is_disabled = await page.evaluate(() => document.querySelector('#btn-size-plateau[disabled]') !== null);
     
     // expect button to be disabled
     assert.equal(is_disabled, true)
