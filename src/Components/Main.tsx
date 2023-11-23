@@ -21,7 +21,8 @@ function Main() {
 
 
     const [plateauSize, setPlateauSize] = useState('');
-  
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
 
 
     function addRover() {
@@ -74,12 +75,52 @@ function choosePlateauSize(){
         setDidRunFinish(true)
     }
 
+function isCoordinateInvalid(inputString:string){
+    const xSize = Number(inputString.split(' ')[0])
+    const ySize = Number(inputString.split(' ')[1])
+
+    if ((xSize <= 0 ) || (ySize <= 0)){
+        return true
+    }
+    if (Number.isNaN(xSize) || Number.isNaN(ySize) ){
+        return true
+    }
+    return false
+       
+}
+function isPlateauInputInvalid(){
+    return isCoordinateInvalid(plateauSize)
+}
+
+function isRoverInputInvalid(){
+    const coordinatesInvalid = isCoordinateInvalid(position)
+    const cardinalLetters  = ['N', "E", "S", "W"]
+    
+    let didFindMatch = false
+    for (let i = 0; i < cardinalLetters.length; i++ ){
+      if(position.split(' ')[2] === cardinalLetters[i]){
+        didFindMatch = true
+      }
+
+    }
+    const cardinalIsBad = didFindMatch === false 
+    if (coordinatesInvalid || cardinalIsBad){
+        return true
+    }
+    return false
+}
+    
+
+
 
     return (
         <>
 
 <div >
                 Plateau size:{' '}
+  
+              
+  
                 <input   type="text"
                     value={plateauSize}
                     onChange={(event) => {
@@ -88,7 +129,9 @@ function choosePlateauSize(){
                     required
               
                 />
-              <button onClick={choosePlateauSize}> Size Plateau</button>
+
+
+              <button disabled={isPlateauInputInvalid()} onClick={choosePlateauSize}> Size Plateau</button>
 
             </div>
 
@@ -116,7 +159,7 @@ function choosePlateauSize(){
             </div>
 
 
-            <button className="btn-user" onClick={addRover}>
+            <button className="btn-user" disabled={isRoverInputInvalid()} onClick={addRover}>
                 Add
             </button>
 
