@@ -72,6 +72,8 @@ Follow these steps to run the Mars Rover application on your local machine:
       ├── Main
       │   ├── Rover  | Responsible for operating the Rovers object according to the instructions
       │   ├── Plateau | Responsible for displaying the Plateau and Rover Data dynamically  
+      │   ├── UserInstructions | Responsible for displaying the interface instructions for the user  
+
 
 
     **Additional Notes**
