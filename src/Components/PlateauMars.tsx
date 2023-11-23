@@ -1,5 +1,5 @@
 import { Scatter } from "react-chartjs-2";
-import React, {  useEffect, useState } from 'react';
+import  {  useEffect, useState } from 'react';
 
 import {
     Chart as ChartJS,
