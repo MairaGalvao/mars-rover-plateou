@@ -27,6 +27,10 @@ Follow these steps to run the Mars Rover application on your local machine:
     This will start the development server, and you can access the application in your browser   
     at  http://localhost:3000.
 
+    ***What happens if the Rover exits the Plateau?***
+
+     If in any move of the Rover it exits the Plateau, the Rover's run stops. 
+
     3. **Interact with the Application:**
 
     Open the application in your browser and follow the on-screen instructions to input plateau  
@@ -43,62 +47,57 @@ Follow these steps to run the Mars Rover application on your local machine:
     
     Run end-to-end test:
     ```
-    node ./src/TestRoboticRover.js; 
+    node ./src/testRoboticRover.js; 
     ```
 
+   **Usage Example**
+   ***Example 1***
+   INPUT:
+   - Plateau size: 20 20
+   - Landing Pos: 1 2 N 
+   - Instruction: LMLMLMLMM 
+   OUTPUT:
+   - Final Position: 1 3 N
+
+   ***Example 2***   
+   INPUT:
+   - Plateau size: 20 20
+   - Landing Position: 3 3 E 
+   - Instruction: MRRMMRMRRM 
+   OUTPUT:
+   - Final Position: 2 3 S
 
     **Project Structure**
-    src/
-    App.js: Main application component.
-    src/
-    components/
-    Main.tsx: The main component
-    Rover.js: Component for user input.
-    PlateauMars.tsx: Component for displaying rovers on the plateau.
-
-    end-to-end-tests/
-    TestRoboticRover.js: End-to-end Puppeteer tests.
-
+      ├── Main
+      │   ├── Rover  | Responsible for operating the Rovers object according to the instructions
+      │   ├── Plateau | Responsible for displaying the Plateau and Rover Data dynamically  
 
 
     **Additional Notes**
     The application uses Javascript-React for the user interface.
     HTML and CSS were utilized for simple and structured styling of the user interface.
-    Chart.js is employed for visualizing rover positions on the plateau.
-    Puppeteer is used for end-to-end and unit testing.
+    Chart.js is employed for visualizing rover positions on the plateau graphcally.
+    Puppeteer is used for end-to-end testing.
 
 
-   **Edge cases taken care**
-   src/components/PlateauMars.tsx
+   **Edge cases**
 
    **Plateau & Rover inputs** 
 
    **Plateau Size**
-   1. The application checks if the X and Y dimension are not filled - with disable button. 
-   2. The application checks if the X and Y values are negative - with disable button.
-   3. The application checks if the X and Y values are numerical - with disable button.
+   1. In case the X or Y dimension are not filled - "Add" button is disabled.
+   2. In case the X or Y values are negative - "Add" button is disabled.
+   3. In case the X or Y values are not numerical - "Add" button is disabled.
 
    **Rover's initial coordinates** 
-   4. The application checks if the X and Y dimension and landing are not filled. 
-   5. The application verifies that the X and Y coordinates are greater than or equal to the 
-   specified Plateau dimensions.
-   6. The application verifies that the X and Y coordinates are numerical.
-   7. The application verifies that the landing direction are N, E, S or W.
+   4. In case the X or Y dimension and cardinal are not filled - "Add" button is disabled. 
+   5. In case the X or Y coordinates are greater than the Plateau dimensions - "Add" button is disabled.
+   6. In case the X or Y coordinates are not numerical - "Add" button is disabled.
+   7. In case the landing direction is not N, E, S or W - "Add" button is disabled.
 
    **Rover's instructions** 
-   8. The application checks the instructions are not filled. 
-   9. The application verifies that the instructions are L, R or M.
+   8. In case the instructions are not filled - "Add" button shuold be disabled. TODO
+   9. In case the instructions are not on of L, R or M - "Add" button shuold be disabled. TODO
 
-
-   **Edge cases NOT taken care**
-   
-   **Form**
-   10. The user must refresh the page in case she/he wants to add another size of Plateau
-   11. The user must reset all the information in case to add new rovers
-   12. The user must verify to not add Rover's in the exact same location
-   13. The user must verify not to add more rover's than the actual amount of points
-   14. Unit test - or e2e test to see if all final results are being displayed 
-   15. Display all the final positions
-   16. add screenshots of test
 
 

@@ -130,7 +130,6 @@ function Main() {
     return (
         <>
 
-        
 <div className='main-app'>
 
 <div>
@@ -143,9 +142,12 @@ function Main() {
     <ul>
       <li>Specify the landing position (x, y, position(cardinal)).</li>
       <li>Provide instructions using 'L', 'R', and 'M'.</li>
-      <li>Click "Add Rover" to deploy the rover on the plateau.</li>
+      <li>Click "Add" to deploy the rover on the plateau.</li>
+ 
+      <li>Note: You can add multiple rovers</li>
+
     </ul>
-    <li>After adding all rovers, click "Run Rovers" to see their final positions displayed in the Plateau.</li>
+    <li>After adding all rovers, click "Run Rovers" to see their final positions displayed in the Plateau .</li>
   </ol>
 </div>
 <div id='plateau-rover-form' className='plateau-rover-form'>
