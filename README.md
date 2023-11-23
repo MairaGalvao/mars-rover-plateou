@@ -27,6 +27,7 @@ Follow these steps to run the Mars Rover application on your local machine:
     This will start the development server, and you can access the application in your browser   
     at  http://localhost:3000.
 
+    ***Product decision*** 
     ***What happens if the Rover exits the Plateau?***
 
      If in any move of the Rover it exits the Plateau, the Rover's run stops. 
