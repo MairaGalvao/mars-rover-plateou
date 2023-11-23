@@ -31,7 +31,13 @@ function Main() {
         const inputY = Number(position.split(' ')[1])
         const inputCardinal = position.split(' ')[2]
 
+        const plateauX = Number(plateauSize.split(' ')[0])
+        const plateauY = Number(plateauSize.split(' ')[1])
+
+
         const roverProps = {
+            xPlateau: plateauX,
+            yPlateau: plateauY,
             x: inputX,
             y: inputY,
             initialCardinal: inputCardinal,
@@ -65,10 +71,16 @@ function Main() {
 
 
 
+
     function runRovers() {
         startingRovers.forEach(function (startRover) {
-            startRover.rover.run()
-            setFinalRovers(finalRovers => [...finalRovers, { roverX: startRover.rover.x, roverY: startRover.rover.y, cardinal: startRover.rover.cardinal }]);
+            const runFinishedSuccessfully = startRover.rover.run()
+            let finalRoverObj = { roverX: startRover.rover.x, roverY: startRover.rover.y, cardinal: startRover.rover.cardinal }
+            if (!runFinishedSuccessfully) {
+                finalRoverObj = { roverX: -1, roverY: -1, cardinal: 'exceeded plateau' }
+            }
+            setFinalRovers(finalRovers => [...finalRovers, finalRoverObj]);
+
         })
         setDidRunFinish(true)
     }
@@ -111,7 +123,7 @@ function Main() {
         if (coordinatesInvalid || cardinalIsBad) {
             return true
         }
-        if (xSize > plateauX || ySize > plateauY ){
+        if (xSize > plateauX || ySize > plateauY) {
             console.log(xSize, ySize, plateauX, plateauY)
             return true
         }
@@ -184,9 +196,9 @@ function Main() {
                     <p>Instruction: {initPosition.rover.movingInstructions}</p>
 
                     <div>
-                        {didRunFinish && <p><b>Final position:</b>
+                        {didRunFinish && <div><b>Final position:</b>
                             <div id='final-position-rover'>{finalRovers[index].roverX} {finalRovers[index].roverY} {finalRovers[index].cardinal}</div>
-                        </p>}
+                        </div>}
 
                     </div>
                 </div>
@@ -194,12 +206,6 @@ function Main() {
 
             {/* Start the Plateau */}
             <button onClick={runRovers} disabled={startingRovers.length === 0} id='run-rover'>Run Rovers</button>
-
-
-
-
-
-
 
         </>
     )
