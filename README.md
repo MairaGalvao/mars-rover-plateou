@@ -10,12 +10,13 @@ String instructions input by the user are graphically represented, displaying bo
 
 Follow these steps to run the Mars Rover application on your local machine:
 
-1. **Clone the Repository:
+### Clone the Repository:
    ```bash
    git clone <https://github.com/MairaGalvao/mars-rover-plateou
    cd client
+   ```
 
-2. ## Install dependencies:
+### Install dependencies:
     ```
     npm install
     ```
