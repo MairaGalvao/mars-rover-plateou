@@ -13,7 +13,6 @@ Follow these steps to run the Mars Rover application on your local machine:
 ### Clone the Repository:
    ```bash
    git clone <https://github.com/MairaGalvao/mars-rover-plateou
-   cd client
    ```
 
 ### Install dependencies:
