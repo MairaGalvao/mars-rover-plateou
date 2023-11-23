@@ -90,7 +90,6 @@ function Rover(this: any, roverProps: RoverProps) {
                 }
             }
         }
-        // finished the instructions successfully
         return true
     }
 

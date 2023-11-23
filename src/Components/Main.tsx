@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Rover from './Rover';
 import PlateauMars from './PlateauMars';
 
@@ -24,7 +24,6 @@ function Main() {
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
 
-
     function addRover() {
 
         const inputX = Number(position.split(' ')[0])
@@ -48,6 +47,10 @@ function Main() {
 
 
 
+
+        
+
+
         setStartingRovers(startingRovers => [...startingRovers, { rover: rover, initialValue: { roverX: rover.x, roverY: rover.y, cardinal: rover.cardinal } }])
         setPosition('')
         setInstructions('')
@@ -55,23 +58,7 @@ function Main() {
 
     }
 
-    function choosePlateauSize() {
-
-        const plateauX = Number(plateauSize.split(' ')[0])
-        const plateauY = Number(plateauSize.split(' ')[1])
-
-
-        const plateauProps = {
-            x: plateauX,
-            y: plateauY,
-        }
-
-        const plateau = new (PlateauMars as any)(plateauProps)
-    }
-
-
-
-
+   
     function runRovers() {
         startingRovers.forEach(function (startRover) {
             const runFinishedSuccessfully = startRover.rover.run()
@@ -83,7 +70,10 @@ function Main() {
 
         })
         setDidRunFinish(true)
+
     }
+
+
 
     function isCoordinateInvalid(inputString: string) {
         const xSize = Number(inputString.split(' ')[0])
@@ -154,9 +144,6 @@ function Main() {
 
                 />
 
-
-                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} onClick={choosePlateauSize}>Set Plateau</button>
-
             </div>
 
 
@@ -204,8 +191,8 @@ function Main() {
                 </div>
             })}
 
-            {/* Start the Plateau */}
             <button onClick={runRovers} disabled={startingRovers.length === 0} id='run-rover'>Run Rovers</button>
+            <PlateauMars x={Number(plateauSize.split(' ')[0])} y={Number(plateauSize.split(' ')[1])} initialCoordinates={startingRovers} finalCoordinates={finalRovers} />
 
         </>
     )
