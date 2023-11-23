@@ -74,3 +74,33 @@ const clickElement = async (page, selector) => {
     await browser.close();
   }
 })();
+
+
+// assert initial Rover location cant be greater than the actual Plateau size
+(async () => {
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+
+  try {
+    await page.goto("http://localhost:3000/");
+
+    await typeInput(page, "#plateau-size", "10 10");
+
+    await clickElement(page, "#btn-size-plateau");
+
+    // bad input 
+    await typeInput(page, "#landing-rover", "50 2 E");
+
+
+    // is button disabled?
+    const is_disabled = await page.evaluate(() => document.querySelector('#add-rover[disabled]') !== null);
+    
+    // expect button to be disabled
+    assert.equal(is_disabled, true)
+
+  } catch (error) {
+    console.error("\nError during script execution:", error);
+  } finally {
+    await browser.close();
+  }
+})();

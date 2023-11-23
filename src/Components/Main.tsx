@@ -61,8 +61,6 @@ function Main() {
         }
 
         const plateau = new (PlateauMars as any)(plateauProps)
-        setPlateauSize('')
-
     }
 
 
@@ -93,6 +91,12 @@ function Main() {
     }
 
     function isRoverInputInvalid() {
+        const xSize = Number(position.split(' ')[0])
+        const ySize = Number(position.split(' ')[1])
+
+        const plateauX = Number(plateauSize.split(' ')[0])
+        const plateauY = Number(plateauSize.split(' ')[1])
+
         const coordinatesInvalid = isCoordinateInvalid(position)
         const cardinalLetters = ['N', "E", "S", "W"]
 
@@ -107,6 +111,13 @@ function Main() {
         if (coordinatesInvalid || cardinalIsBad) {
             return true
         }
+        if (xSize > plateauX || ySize > plateauY ){
+            console.log(xSize, ySize, plateauX, plateauY)
+            return true
+        }
+
+
+
         return false
     }
 
@@ -132,7 +143,7 @@ function Main() {
                 />
 
 
-                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} onClick={choosePlateauSize}> Size Plateau</button>
+                <button id='btn-size-plateau' disabled={isPlateauInputInvalid()} onClick={choosePlateauSize}>Set Plateau</button>
 
             </div>
 
